@@ -1,0 +1,24 @@
+body { font-family: arial; 
+       background-color: #ECE5B6;
+       font-size: small }
+      
+table { color: yellow;
+        background-color: blue;
+        border-width: 5px;
+        border-style: groove;
+        border-color: black; 
+        padding: 10px; }
+
+H1   { background:#C9C299;
+       color: #805817;
+       margin: 0;
+       padding: 5;
+       font-family: Geneva, Helvetica, Arial, sans-serif;
+       font-size: 1.8em;
+       font-weight	       : 900 ;
+       text-align: center;
+       padding-bottom	       : 1ex ;
+       padding-top	    : 1ex ;
+     }
+
+form  { border: medium double #463E41 }
