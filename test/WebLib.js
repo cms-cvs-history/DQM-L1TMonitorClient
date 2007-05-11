@@ -927,23 +927,24 @@ for (var i = 0; i < parent.frames['status'].document.forms[currentSource.name].e
 
 // calculate position
 
-	if((n%2) && n>1) 
+	if(n>0) 
 	{ 
-	  ntop = 100 + 240*(n-1)/2; 
+	  ntop = 100 + 540*(n-1); 
 	  nleft = 100;
-	
-	} else if (!(n%2) && n>1)
-	
-	{
-	  nleft = 100 + 340;
 	}
+	
+//	} else if (!(n%2) && n>1)
+	
+//	{
+//	  nleft = 100 + 340;
+//	}
 	  
 	var topPos = ntop.toString();
 	var leftPos = nleft.toString();
  	newframe.style.top = topPos + 'px';
  	newframe.style.left = leftPos + 'px';
- 	newframe.height = '200px';
- 	newframe.width = '300px';
+ 	newframe.height = '500px';
+ 	newframe.width = '700px';
  	newframe.style.position = "absolute";
 
         parent.frames['display'].document.body.appendChild(newframe);
