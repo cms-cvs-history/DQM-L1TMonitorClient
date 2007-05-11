@@ -26,6 +26,7 @@ var sourceArray = new Array();
 sourceArray[0] = new  SourceObjects("Summary");
 sourceArray[1] = new  SourceObjects("L1TECALTPG");
 sourceArray[2] = new  SourceObjects("L1TRCT");
+sourceArray[3] = new  SourceObjects("GCT");
 
 //*************************************************************/
 //*************************GIF DISPLAYS************************/
