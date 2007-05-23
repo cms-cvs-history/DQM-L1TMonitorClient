@@ -27,6 +27,10 @@ sourceArray[0] = new  SourceObjects("Summary");
 sourceArray[1] = new  SourceObjects("L1TECALTPG");
 sourceArray[2] = new  SourceObjects("L1TRCT");
 sourceArray[3] = new  SourceObjects("GCT");
+sourceArray[4] = new  SourceObjects("L1TDTTPG");
+sourceArray[5] = new  SourceObjects("L1TGT");
+sourceArray[6] = new  SourceObjects("L1TDTTF");
+sourceArray[7] = new  SourceObjects("L1TGMT");
 
 //*************************************************************/
 //*************************GIF DISPLAYS************************/
