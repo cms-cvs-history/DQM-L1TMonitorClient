@@ -3,6 +3,7 @@
 eval `scramv1 ru -sh`
 
 HOSTNAME=$(echo `/bin/hostname` | sed 's/\//\\\//g')
+#HOSTNAME=localhost
 echo "The hostname is = $HOSTNAME"
 
 
@@ -13,7 +14,7 @@ MWC_LIB1="${LOCALRT}/lib/${SCRAM_ARCH}/libDQML1TMonitorClient.so"
 echo "Looking for the L1TMonitorClient library... $MWC_LIB1"
 if [ ! -f $MWC_LIB1 ]; then
     echo "Not Found! Will pick it up from the release area..."
-    MWC_LIB1="/afs/cern.ch/cms/Releases/CMSSW/prerelease/${CMSSW_VERSION}/lib/slc3_ia32_gcc323/libDQML1TMonitorClient.so"
+    MWC_LIB1="/afs/cern.ch/cms/Releases/CMSSW/prerelease/${CMSSW_VERSION}/lib/${SCRAM_ARCH}/libDQML1TMonitorClient.so"
 else 
     echo "Found!"
 fi
