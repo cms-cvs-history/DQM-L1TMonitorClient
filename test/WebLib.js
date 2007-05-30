@@ -1,4 +1,7 @@
+// $Id$
+// $Log$
 var http_request = false;
+var debug_print_mode = true;
 
 var gif_url;
 // strings containing the names of all active GifDisplays 
@@ -35,7 +38,51 @@ sourceArray[7] = new  SourceObjects("L1TGMT");
 
 // the list of displayFrame objects 
 var displays_l = new Array(); 
+// the number of currently used displays
+var n=0;
 
+
+//*************************************************************
+//*************************************************************
+//*************************************************************
+// found on the www - thanks to whomever
+function debug_print(text) {
+    if (!debug_print_mode) return false;
+    
+    //var fe = self.frames['debug_print'].document;
+    var msg ="";
+    for (var i =0; i < top.frames.length; ++i ) {
+	msg += "-> " + top.frames[i].name;
+    }
+    var fe = top.frames["debug"];
+    if ( ! fe ) {
+	return;
+    }
+    var fed = fe.document;
+    if ( ! fed ) {
+	var p = document.createElement("div");
+	p.className = "debug";
+	fe.appendChild(p);	
+    }
+    var e = fed.getElementById('debug');
+    
+    //var e= document.getElementById('debug_print');
+    
+    if (!e) {
+	e= document.createElement("p");
+	e.className= 'debug';
+	e.id= 'debug';
+	
+	fe.document.appendChild(e);
+    }
+    
+    var m= document.createElement("div");
+    m.appendChild( document.createTextNode( text ) );
+    
+    e.appendChild( m );
+    
+    return true;
+}
 
 /*************************************************************/
 /*************************************************************/
@@ -78,6 +125,88 @@ function makeMeListRequest(sourceName)
     sourceArray[i].status=true;
   }
   }
+}
+/*************************************************************/
+/*************************************************************/
+function makeSummary(sourceName)
+{
+  debug_print("makeSummary(\'" + sourceName +"\')");
+  for(var i = 0; i < sourceArray.length; i++){
+    if(sourceArray[i].name == sourceName && !(sourceArray[i].status)){
+      sourceArray[i].status=true; // once per source object
+      // now get list of functions
+      url = getMenuFrameURL();
+   
+      url = url + "/Request";
+      url = url + "?" + "RequestID=Summary";
+      url = url + "&" + "Source=" + sourceName;
+      makeRequest(url, function() { SummaryListener(sourceName); });
+    }
+  }
+}
+
+// callback to parse the XML list of objects and ....
+function SummaryListener(source)
+{
+  if (http_request.readyState == 4) {
+    if (http_request.status == 200) {
+      var xmldoc;
+
+      // Load the xml elements on javascript lists:
+      if (http_request != false) {
+	xmldoc  = http_request.responseXML;
+	tags = xmldoc.getElementsByTagName('SingleMe');
+	debug_print("SummaryListener: found this many tags: " + tags.length);
+	// now we know what to display: add it.
+ 	for ( var i = 0; i < tags.length; ++ i ) {
+	  // make a new frame
+	  var newframe = parent.frames['display'].document.
+	    createElement("iframe"); //add dynamic frame
+	  newframe.id = "frameid"+ n;
+	  var ntop=100;
+	  var nleft=100;
+	  if(n>0) { 
+	    ntop = 100 + 540*(n); 
+	    nleft = 100;
+	  }
+	  var topPos = ntop.toString();
+	  var leftPos = nleft.toString();
+	  newframe.style.top = topPos + 'px';
+	  newframe.style.left = leftPos + 'px';
+	  newframe.height = '500px';
+	  newframe.width = '700px';
+	  newframe.style.position = "absolute";
+
+	  parent.frames['display'].document.body.appendChild(newframe);
+	  n++;
+	  debug_print("n = " +n );
+	  displays_l[n-1] = new mydisplayFrame(newframe.name);
+        
+	  // get meName, source from Tag
+	  // model is
+	  // Collector/GlobalDQM/L1TMonitor/L1TRCT/RctIsoEmEtEtaPhi
+	  var full = tags.item(i).firstChild.data;
+	  var lastSlash = full.lastIndexOf("/");
+	  displays_l[n-1].meName = full.substring(lastSlash+1, full.length);
+	  var secondLastSlash = full.lastIndexOf("/", lastSlash-1);
+	  displays_l[n-1].sourceName =  
+	    full.substring(secondLastSlash+1,lastSlash);
+	  displays_l[n-1].name =  "display"+
+	    full.substring(secondLastSlash+1,lastSlash);
+	  debug_print("source = " + displays_l[n-1].sourceName + ", name = " + 
+		      displays_l[n-1].meName + "(tag is " 
+		      + tags.item(i).firstChild.data +")");
+	  displays_l[n-1].frameid = newframe.id; // name of corresponding frame id
+
+	  // view Me corresponding to the current checkbox
+	  startMeView(displays_l[n-1]);
+	  
+ 	}
+      }
+      
+    }
+  }
+
 }
 
 /*************************************************************/
@@ -283,7 +412,6 @@ function clearAll(sourceName){
 /*************************************************************/
 /*************************************************************/
 // loop on selected checkboxes and submit request for display
-
 function submitSelectedMe(currentSource)
 {
 
@@ -291,7 +419,6 @@ function submitSelectedMe(currentSource)
 if(currentSource.displayStatus)  return false;
 
 var found = false;
-var n=0;
 var ntop=100;
 var nleft = 100;
 
@@ -370,6 +497,10 @@ for (var i = 0; i < parent.frames['status'].document.forms[currentSource.name].e
 
 /*************************************************************/
 /*************************************************************/
+// PW for summary
+
+/*************************************************************/
+/*************************************************************/
 
 
 function mydisplayFrame(name)
@@ -405,7 +536,10 @@ function startMeView(display)
 
 function updateMeView(display)
 {
-  var interval = 5000;
+    debug_print("updateMeView: source = " + display.meName + 
+		", source = " + display.sourceName);
+    
+  var interval = 30000;
   if (display.is_viewed == true)
   {  
       makeMeDisplayRequest(display);
