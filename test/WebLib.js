@@ -1,11 +1,13 @@
-var navigator_current = "top";
-var contentViewer_current = "top";
+// $Id: WebLib.js,v 1.6 2007/05/30 13:37:59 wittich Exp $
+// $Log: WebLib.js,v $
+// Revision 1.6  2007/05/30 13:37:59  wittich
+// Changes for summary
+//
 var http_request = false;
+var debug_print_mode = true;
 
 var gif_url;
-var view_all_contents = true;
 // strings containing the names of all active GifDisplays 
-var active_displays_l = new Array(); 
 
 /*
 var SourceArray = new Array();
@@ -27,631 +29,64 @@ sourceArray[0] = new  SourceObjects("Summary");
 sourceArray[1] = new  SourceObjects("L1TECALTPG");
 sourceArray[2] = new  SourceObjects("L1TRCT");
 sourceArray[3] = new  SourceObjects("GCT");
+sourceArray[4] = new  SourceObjects("L1TDTTPG");
+sourceArray[5] = new  SourceObjects("L1TGT");
+sourceArray[6] = new  SourceObjects("L1TDTTF");
+sourceArray[7] = new  SourceObjects("L1TGMT");
 
 //*************************************************************/
 //*************************GIF DISPLAYS************************/
 //*************************************************************/
 
-// the current displayFrame
-var current_display;
 
 // the list of displayFrame objects 
 var displays_l = new Array(); 
+// the number of currently used displays
+var n=0;
 
-function displayFrame(name)
-{
-  this.name = name;
-  this.is_viewed = false;
-  this.viewed_l = new Array();
-}
 
-/*
-  This function is called onload. It creates the list of 
-  displayFrame objects.
-*/
-
-function fillDisplayList()
-{
-  var iframes_l = parent.frames['display'].document.getElementsByTagName("iframe");
-  for (i = 0; i < iframes_l.length; i++)
-  {
-//    alert("Ecchime!");
-    displays_l[i] = new displayFrame(iframes_l[i].id);
-  }
-
-  // the default current is the first:
-  current_display = displays_l[0];
-}
-
-function makeCurrent(display_frame_name)
-{
-  for (i = 0; i < displays_l.length; i++)
-  {
-    if (displays_l[i].name == display_frame_name)
-    {
-      break;
+//*************************************************************
+//*************************************************************
+//*************************************************************
+// found on the www - thanks to whomever
+function debug_print(text) {
+    if (!debug_print_mode) return false;
+    
+    //var fe = self.frames['debug_print'].document;
+    var msg ="";
+    for (var i =0; i < top.frames.length; ++i ) {
+	msg += "-> " + top.frames[i].name;
     }
-  }
-  current_display = displays_l[i];
-}
-
-
-//*************************************************************/
-//**********************GENERIC FUNCTIONS**********************/
-//*************************************************************/
-
-/*
-  This function should return the url of the application webpage
-  without asking the server...
-*/
-
-function getApplicationURL()
-{
-  var url = window.location.href;
-
-  // remove the cgi request from the end of the string
-  var index = url.indexOf("?");
-  if (index >= 0)
-  {
-    url = url.substring(0, index);
-  }
-
-  index = url.lastIndexOf("general");
-  url = url.substring(0, index);
-
-  // remove the trailing '/' from the end of the string
-  index = url.lastIndexOf("/");
-  if (index == url.length - 1)
-  {
-    url = url.substring(0, index);
-  }
-
-  return url;
-}
-
-function getContextURL()
-{
-  var app_url = getApplicationURL();
-  var index = app_url.lastIndexOf("/");
-  return app_url.substring(0, index);
-}
-
-
-/*
-  This function submits a generic request in the form of a url
-  and calls the receiver_function when the state of the request
-  changes.
-*/
-
-function makeRequest(url, receiver_function) 
-{
-  http_request = false;
-  if (window.XMLHttpRequest) 
-  { 
-    http_request = new XMLHttpRequest();
-    if (http_request.overrideMimeType)
-    {
-      http_request.overrideMimeType('text/xml');
+    var fe = top.frames["debug"];
+    if ( ! fe ) {
+	return;
     }
-  }
-  if (!http_request) 
-  {
-    alert('Giving up :( Cannot create an XMLHTTP instance');
-  }
-  http_request.onreadystatechange = receiver_function;
-  http_request.open('GET', url, true);
-  http_request.send(null);
-
-  return;
-}
-
-function dummy()
-{
-}
-
-//*************************************************************/
-//*************************NAVIGATOR***************************/
-//*************************************************************/
-/* 
-  This function returns the URL that should be loaded as
-  a result of clicks on the drop down menus of the navigator form.
-*/
-
-function getNavigatorRequestURL()
-{
-  var form = document.getElementById("NavigatorForm");
-  var open = form.Open;
-  var subscribe   = form.Subscribe;
-  var unsubscribe = form.Unsubscribe;
-
-  url = getApplicationURL();
-
-  if (open.value != "")
-  {
-    url = url + "/Request"
-    url = url + "?" + "RequestID=Open";
-    url = url + "&" + "Current=" + navigator_current;
-    url = url + "&" + "Open=" + open.value;
-  }
-  else if (subscribe.value != "")
-  {
-    url = url + "/Request";
-    url = url + "?" + "RequestID=Subscribe";
-    url = url + "&" + "Current=" + navigator_current;
-    url = url + "&" + "SubscribeTo=" + subscribe.value;
-  }
-  else if (unsubscribe.value != "")
-  {
-    url = url + "/Request";
-    url = url + "?" + "RequestID=Unsubscribe";
-    url = url + "&" + "Current=" + navigator_current;
-    url = url + "&" + "UnsubscribeFrom=" + unsubscribe.value;
-  }
-  return url;
-}
-
-//*************************************************************/
-
-/*
-  This function updates the navigator drop down menus according
-  to the xml of the server response.
-*/
-
-function updateNavigator()
-{
-  if (http_request.readyState == 4) 
-  {
-    if (http_request.status == 200) 
-    {
-      var xmldoc;
-      var subdirs_l;
-      var subscribe_l;
-      var unsubscribe_l;
-
-      // Load the xml elements on javascript lists:
-      if (http_request != false)
-      {
-        xmldoc = http_request.responseXML;
-        navigator_current = xmldoc.getElementsByTagName('current').item(0).firstChild.data;
-        subdirs_l = xmldoc.getElementsByTagName('open');
-        subscribe_l = xmldoc.getElementsByTagName('subscribe');
-        unsubscribe_l = xmldoc.getElementsByTagName('unsubscribe');
-      }
-
-      var form = document.getElementById("NavigatorForm");
-      var open = form.Open;
-      var subscribe   = form.Subscribe;
-      var unsubscribe = form.Unsubscribe;
-
-      // Update the Open menu:
-      open.options.length = 0;
-
-      open.options[0] = new Option("", "", true, true);
-      open.options[1] = new Option("top", "top", false, false);
-      for(var i = 0; i < subdirs_l.length; i++)
-      {
-        var to_open = subdirs_l.item(i).firstChild.data;
-        open.options[i + 2] = new Option(to_open, to_open, false, false);
-      }
-      open.selectedIndex = 0;
-
-      // Update the Subscribe menu:
-      subscribe.options.length = 0;
-      subscribe.options[0] = new Option("", "", true, true);
-      for(var i = 0; i < subscribe_l.length; i++)
-      {
-        var to_subscribe = subscribe_l.item(i).firstChild.data;
-        subscribe.options[i + 1] = new Option(to_subscribe, to_subscribe, false, false);
-      }
-      subscribe.selectedIndex = 0;
-
-      // Update the Unsubscribe menu:
-      unsubscribe.options.length = 0;
-      unsubscribe.options[0] = new Option("", "", true, true);
-      for(var i = 0; i < unsubscribe_l.length; i++)
-      {
-        var to_unsubscribe = unsubscribe_l.item(i).firstChild.data;
-        unsubscribe.options[i + 1] = new Option(to_unsubscribe, to_unsubscribe, false, false);
-      }
-      unsubscribe.selectedIndex = 0;
+    var fed = fe.document;
+    if ( ! fed ) {
+	var p = document.createElement("div");
+	p.className = "debug";
+	fe.appendChild(p);	
     }
-  }
-}
-
-/*************************************************************/
-
-function makeNavigatorRequest()
-{
-  url = getNavigatorRequestURL();
-
-  // pass a reference to the updateNavigator function:
-  makeRequest(url, updateNavigator); 
-}
-
-
-//*************************************************************/
-//************************CONFIG BOX***************************/
-//*************************************************************/
-
-function submitConfigure(url, myform)
-{
-  navigator_form = false;
-  url = url + "/Request";
-  url = url + "?" + "RequestID=Configure";
-  url = url + "&" + "Hostname=" + myform.Hostname.value;
-  url = url + "&" + "Port=" + myform.Port.value;
-  url = url + "&" + "Clientname=" + myform.Name.value;
-
-  var funct = alertContents;
-  makeRequest(url, funct);
-}
-
-//*************************************************************/
-
-function alertContents() 
-{
-  if (http_request.readyState == 4) 
-  {
-    if (http_request.status == 200) 
-    {
-      alert("Configuration Submitted");
+    var e = fed.getElementById('debug');
+    
+    //var e= document.getElementById('debug_print');
+    
+    if (!e) {
+	e= document.createElement("p");
+	e.className= 'debug';
+	e.id= 'debug';
+	
+	fe.document.appendChild(e);
     }
-    else 
-    {
-      alert('There was a problem with the request.');
-    }
-  }
+    
+    var m= document.createElement("div");
+    m.appendChild( document.createTextNode( text ) );
+    
+    e.appendChild( m );
+    
+    return true;
 }
 
-
-//*************************************************************/
-//***********************GIF DISPLAY***************************/
-//*************************************************************/
-
-/*
-  Returns true if the display frame provided as an argument 
-  is currently being viewed.
-*/
-
-function isViewed(display_frame_name)
-{
-  for (i = 0; i < active_displays_l.length; i++)
-  { 
-    if (active_displays_l[i] == display_frame_name) 
-    {
-      return true; 
-    }
-  }
-  return false;
-}
-
-//*************************************************************/
-
-/*
-  These functions get called if the user clicks on the "start viewing"
-  or "stop viewing" buttons of a display frame. They set the is_viewed
-  field of the displayFrame object.
-*/
-
-function getDisplayFrame(display_frame_name)
-{
-  for (i = 0; i < displays_l.length; i++)
-  {
-    if (displays_l[i].name == display_frame_name) {
-//     alert("getDisplayFrame "+display_frame_name);
-     return displays_l[i];
-     }
-  }
-}
-
-function startViewing(display_frame_name)
-{
-  alert("startViewing "+display_frame_name);
-  var display = getDisplayFrame(display_frame_name);
-
-  if (display.is_viewed) 
-  {
-    alert('This GifViewer is already active');
-    return;
-  }
-
-  display.is_viewed = true;
-  alert("startViewing "+ display.name);
-  updateDisplay(display_frame_name);
-}
-
-function stopViewing(display_frame_name)
-{
-  var display = getDisplayFrame(display_frame_name);
-  display.is_viewed = false;
-}
-
-//*************************************************************/
-
-/*
-  This function is initially called when the "start viewing" button
-  of a display frame is pressed and keeps calling itself every 
-  [interval] msec, refreshing the frame until it becomes inactive. 
-*/
-
-function updateDisplay(display_frame_name)
-{
-  var interval = 5000;
-  var display_frame = getDisplayFrame(display_frame_name);
-
-  if (display_frame.is_viewed == true)
-  {  
-  alert("updateDisplay "+display_frame_name);
-    makeDisplayRequest(display_frame_name);
-    if (display_frame.viewed_l.length != 0)
-    {
-      window.frames[display_frame_name].location.href = getGifURL(display_frame_name);
-    }
-  }
-  var this_function_call = "updateDisplay('" + display_frame_name + "')";
-  setTimeout(this_function_call, interval);
-}
-
-//*************************************************************/
-
-function getGifURL(display_frame_name)
-{
-  var url = getContextURL();
-  url = url + "/temporary/" + display_frame_name + ".gif";
-//        alert("getGifURL: " + url);
-  return url;
-}
-
-//*************************************************************/
-
-function getDisplayRequestURL(display_frame_name)  
-{
-  url = getApplicationURL();
-  url = url + "/Request"
-  url = url + "?" + "RequestID=Draw"
-  url = url + "&" + "Current=" + contentViewer_current;
-  url = url + "&" + "DisplayFrameName=" + display_frame_name;
-
-  var display_frame = getDisplayFrame(display_frame_name);
-  for (i = 0; i < display_frame.viewed_l.length; i++)
-  {
-    url = url + "&" + "View=" + display_frame.viewed_l[i];
-  }
-        alert("getContentViewerRequestURL: " + url);
-  return url;
-}
-
-//*************************************************************/
-
-function makeDisplayRequest(display_frame_name)
-{
-  url = getDisplayRequestURL(display_frame_name);
-  // pass a reference to the updateGifURL function:
-  makeRequest(url, updateGifURL); 
-}
-
-//*************************************************************/
-
-function updateGifURL()
-{
-  if (http_request.readyState == 4) 
-  {
-    if (http_request.status == 200) 
-    {
-      var xmldoc;
-
-       // Load the xml elements on javascript lists:
-      if (http_request != false)
-      {
-        xmldoc  = http_request.responseXML;
-        gif_url = xmldoc.getElementsByTagName('fileURL').item(0).firstChild.data;
-      }
-    }
-  }
-}
-
-
-//*************************************************************/
-//**********************CONTENT VIEWER*************************/
-//*************************************************************/
-
-/* 
-  This function updates the ContentViewer "Unview" field
-  after the user chooses to view or stop viewing something
-*/
-
-function updateContentViewerNoRequest()
-{
-  var form = document.getElementById("ContentViewerForm");
-  var view = form.View;
-  var unview = form.Unview;
-
-  // first updated the list of viewed MEs
-  updateViewedList();
-
-  // then update the Unview menu, based on the updated list:
-  unview.options.length = 0;
-  unview.options[0] = new Option("", "", true, true);
-  var viewed_from_current = getViewedFromDir(contentViewer_current);
-  for (var i = 0; i < viewed_from_current.length; i++)
-  {
-    unview.options[i + 1] = new Option(viewed_from_current[i], viewed_from_current[i], false, false);
-  }
-  unview.selectedIndex = 0;
-
-  // clear the lingering selection from the "View" menu
-  view.selectedIndex = 0;
-}
-
-function updateViewedList()
-{
-  var form = document.getElementById("ContentViewerForm");
-  var view   = form.View;
-  var unview = form.Unview;
-
-  if (view.value != "")
-  {
-    var addition = view.value;
-    viewedListAdd(addition);
-  }
-  else if (unview.value != "")
-  {
-    var removal = unview.value;
-    viewedListRemove(removal);
-  }
-}
-
-//*************************************************************/
-
-/*
-  These functions add/remove something to/from the viewed_l.
-*/
-
-function viewedListAdd(addition)
-{
-  for (i = 0; i < current_display.viewed_l.length; i++)
-  { 
-    if (addition == current_display.viewed_l[i]) 
-    {
-      return; 
-    }
-  }
-  current_display.viewed_l[current_display.viewed_l.length] = addition;
-}
-
-function viewedListRemove(removal)
-{
-  for (i = 0; i < current_display.viewed_l.length; i++)
-  {
-    if (removal == current_display.viewed_l[i])
-    {
-      current_display.viewed_l.splice(i, 1);
-    }
-  }
-}
-
-//*************************************************************/
-
-function makeContentViewerRequest()
-{
-  url = getContentViewerRequestURL();
-  makeRequest(url, updateContentViewer);
-}
-
-//*************************************************************/
-
-function getContentViewerRequestURL()
-{
-  var form = document.getElementById("ContentViewerForm");
-  var open = form.Open;
-
-  url = getApplicationURL();
-
-  if (open.value != "")
-  {
-    url = url + "/Request";
-    url = url + "?RequestID=ContentsOpen";
-    url = url + "&" + "Current=" + contentViewer_current;
-    url = url + "&" + "Open=" + open.value;
-  }
-
-  return url;
-}
-
-//*************************************************************/
-
-/*
-  This function updates the fields of the content viewer widget
-  after an "ContentViewerOpen" request.
-*/
-
-function updateContentViewer()
-{
-  if (http_request.readyState == 4) 
-  {
-    if (http_request.status == 200) 
-    {
-      var xmldoc;
-      var subdirs_l;
-      var view_l;
-      var unview_l;
-
-      // Load the xml elements on javascript lists:
-      if (http_request != false)
-      {
-        xmldoc = http_request.responseXML;
-
-        // set the contentViewer_current first:
-        contentViewer_current = xmldoc.getElementsByTagName('current').item(0).firstChild.data;
-
-        subdirs_l = xmldoc.getElementsByTagName('open');
-        view_l = xmldoc.getElementsByTagName('view');
-      }
-
-      // get references to the form elements so that we can update them
-      var form = document.getElementById("ContentViewerForm");
-      var open = form.Open;
-      var view = form.View;
-      var unview = form.Unview; 
-
-      // Update the Open menu:
-      open.options.length = 0;
-      open.options[0] = new Option("", "", true, true);
-      open.options[1] = new Option("top", "top", false, false);
-      for(var i = 0; i < subdirs_l.length; i++)
-      {
-        var to_open = subdirs_l.item(i).firstChild.data;
-        open.options[i + 2] = new Option(to_open, to_open, false, false);
-      }
-      open.selectedIndex = 0;
-
-      // Update the View menu:
-      view.options.length = 0;
-      view.options[0] = new Option("", "", true, true);
-      for(var i = 0; i < view_l.length; i++)
-      {
-        var to_view = view_l.item(i).firstChild.data;
-        view.options[i + 1] = new Option(to_view, to_view, false, false);
-      }
-      view.selectedIndex = 0;
-
-      // Update the Unview menu:
-      unview.options.length = 0;
-      unview.options[0] = new Option("", "", true, true);
-      var viewed_from_current = getViewedFromDir(contentViewer_current);
-      for (var i = 0; i < viewed_from_current.length; i++)
-      {
-        unview.options[i + 1] = new Option(viewed_from_current[i], viewed_from_current[i], false, false);
-      }
-      unview.selectedIndex = 0;
-    }
-  }
-}
-
-//*************************************************************/
-
-/*
-  This function returns an array with all files in viewed_l that
-  also reside in the directory dir, supplied as a parameter.
-*/
-
-function getViewedFromDir(dir)
-{
-  var viewed_l = current_display.viewed_l;
-  var in_dir_l = new Array();
-  for (var i = 0; i < current_display.viewed_l.length; i++)
-  {
-    var entry = viewed_l[i];
-    var index = entry.lastIndexOf("/");
-    if (entry.substring(0, index) == dir)
-    {
-      in_dir_l[in_dir_l.length] = entry;
-    }
-  }
-  return in_dir_l;
-}
-
-/*************************************************************/
 /*************************************************************/
 /*************************************************************/
 /*************************************************************/
@@ -693,6 +128,87 @@ function makeMeListRequest(sourceName)
     sourceArray[i].status=true;
   }
   }
+}
+/*************************************************************/
+/*************************************************************/
+function makeSummary(sourceName)
+{
+  debug_print("makeSummary(\'" + sourceName +"\')");
+  for(var i = 0; i < sourceArray.length; i++){
+    if(sourceArray[i].name == sourceName && !(sourceArray[i].status)){
+      sourceArray[i].status=true; // once per source object
+      // now get list of functions
+      url = getMenuFrameURL();
+   
+      url = url + "/Request";
+      url = url + "?" + "RequestID=Summary";
+      url = url + "&" + "Source=" + sourceName;
+      makeRequest(url, function() { SummaryListener(sourceName); });
+    }
+  }
+}
+
+// callback to parse the XML list of objects and ....
+function SummaryListener(source)
+{
+  if (http_request.readyState == 4) {
+    if (http_request.status == 200) {
+      var xmldoc;
+
+      // Load the xml elements on javascript lists:
+      if (http_request != false) {
+	xmldoc  = http_request.responseXML;
+	tags = xmldoc.getElementsByTagName('SingleMe');
+	debug_print("SummaryListener: found this many tags: " + tags.length);
+	// now we know what to display: add it.
+ 	for ( var i = 0; i < tags.length; ++ i ) {
+	  // make a new frame
+	  var newframe = parent.frames['display'].document.
+	    createElement("iframe"); //add dynamic frame
+	  newframe.id = "frameid"+ n;
+	  var ntop=100;
+	  var nleft=100;
+	  if(n>0) { 
+	    ntop = 100 + 540*(n); 
+	    nleft = 100;
+	  }
+	  var topPos = ntop.toString();
+	  var leftPos = nleft.toString();
+	  newframe.style.top = topPos + 'px';
+	  newframe.style.left = leftPos + 'px';
+	  newframe.height = '500px';
+	  newframe.width = '700px';
+	  newframe.style.position = "absolute";
+
+	  parent.frames['display'].document.body.appendChild(newframe);
+	  n++;
+	  debug_print("n = " +n );
+	  displays_l[n-1] = new mydisplayFrame(newframe.name);
+        
+	  // get meName, source from Tag
+	  // model is
+	  // Collector/GlobalDQM/L1TMonitor/L1TRCT/RctIsoEmEtEtaPhi
+	  var full = tags.item(i).firstChild.data;
+	  var lastSlash = full.lastIndexOf("/");
+	  displays_l[n-1].meName = full.substring(lastSlash+1, full.length);
+	  var secondLastSlash = full.lastIndexOf("/", lastSlash-1);
+	  displays_l[n-1].sourceName =  
+	    full.substring(secondLastSlash+1,lastSlash);
+	  displays_l[n-1].name =  "display"+displays_l[n-1].meName;
+	  debug_print("source = " + displays_l[n-1].sourceName + ", name = " + 
+		      displays_l[n-1].meName + "(tag is " 
+		      + tags.item(i).firstChild.data +")");
+	  displays_l[n-1].frameid = newframe.id; // name of corresponding frame id
+
+	  // view Me corresponding to the current checkbox
+	  startMeView(displays_l[n-1]);
+	  
+ 	}
+      }
+      
+    }
+  }
+
 }
 
 /*************************************************************/
@@ -898,7 +414,6 @@ function clearAll(sourceName){
 /*************************************************************/
 /*************************************************************/
 // loop on selected checkboxes and submit request for display
-
 function submitSelectedMe(currentSource)
 {
 
@@ -906,7 +421,6 @@ function submitSelectedMe(currentSource)
 if(currentSource.displayStatus)  return false;
 
 var found = false;
-var n=0;
 var ntop=100;
 var nleft = 100;
 
@@ -922,7 +436,9 @@ for (var i = 0; i < parent.frames['status'].document.forms[currentSource.name].e
 	var newframe = parent.frames['display'].document.createElement("iframe"); //add dynamic frame
         
 	newframe.id = "frameid" + n;
-        newframe.name = "gifDisplay" + n;
+//        newframe.name = "gifDisplay" + n;
+//        newframe.name = currentSource.name;
+        newframe.name = parent.frames['status'].document.forms[currentSource.name].elements[i].value;
         newframe.frameborder = 0;
 
 // calculate position
@@ -983,6 +499,10 @@ for (var i = 0; i < parent.frames['status'].document.forms[currentSource.name].e
 
 /*************************************************************/
 /*************************************************************/
+// PW for summary
+
+/*************************************************************/
+/*************************************************************/
 
 
 function mydisplayFrame(name)
@@ -1018,7 +538,10 @@ function startMeView(display)
 
 function updateMeView(display)
 {
-  var interval = 5000;
+  debug_print("updateMeView: me = " + display.meName + 
+	      ", source = " + display.sourceName);
+    
+  var interval = 30000;
   if (display.is_viewed == true)
   {  
       makeMeDisplayRequest(display);
