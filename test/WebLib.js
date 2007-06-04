@@ -1,5 +1,8 @@
-// $Id$
-// $Log$
+// $Id: WebLib.js,v 1.6 2007/05/30 13:37:59 wittich Exp $
+// $Log: WebLib.js,v $
+// Revision 1.6  2007/05/30 13:37:59  wittich
+// Changes for summary
+//
 var http_request = false;
 var debug_print_mode = true;
 
@@ -191,8 +194,7 @@ function SummaryListener(source)
 	  var secondLastSlash = full.lastIndexOf("/", lastSlash-1);
 	  displays_l[n-1].sourceName =  
 	    full.substring(secondLastSlash+1,lastSlash);
-	  displays_l[n-1].name =  "display"+
-	    full.substring(secondLastSlash+1,lastSlash);
+	  displays_l[n-1].name =  "display"+displays_l[n-1].meName;
 	  debug_print("source = " + displays_l[n-1].sourceName + ", name = " + 
 		      displays_l[n-1].meName + "(tag is " 
 		      + tags.item(i).firstChild.data +")");
@@ -536,8 +538,8 @@ function startMeView(display)
 
 function updateMeView(display)
 {
-    debug_print("updateMeView: source = " + display.meName + 
-		", source = " + display.sourceName);
+  debug_print("updateMeView: me = " + display.meName + 
+	      ", source = " + display.sourceName);
     
   var interval = 30000;
   if (display.is_viewed == true)
