@@ -89,15 +89,15 @@ void TriggerWebInterface::printMeListXML(std::string source, xgi::Output * out)
 
   if (!(*mui_p)) 
     {
-      cout << "NO MUI!!!" << endl;
+      std::cout << "NO MUI!!!" << std::endl;
       return;
     }
   
   out->getHTTPResponseHeader().addHeader("Content-Type", "text/xml");
   
-  *out << "<?xml version=\"1.0\" ?>" << endl;
+  *out << "<?xml version=\"1.0\" ?>" << std::endl;
    
-  *out << "<navigator>" << endl;
+  *out << "<navigator>" << std::endl;
   
   std::cout << "printMeListXML: written header" <<std::endl;
    
@@ -151,7 +151,7 @@ void TriggerWebInterface::printMeListXML(std::string source, xgi::Output * out)
 //       std::cout << "singleMeName = " << singleMeName << std::endl;
 ////               std::string fullpath=dirName + singleMeName;
 ////       contents.push_back(fullpath);
-       *out << "<subscribe>" << singleMeName << "</subscribe>" << endl;
+       *out << "<subscribe>" << singleMeName << "</subscribe>" << std::endl;
 //       std::cout << "ME name = " << singleMeName << std::endl;
                                                                                                              
        reminingNames=reminingNames.substr(singleMeNameCharNumber+1);
@@ -160,7 +160,7 @@ void TriggerWebInterface::printMeListXML(std::string source, xgi::Output * out)
     }
                                                                                                              
 
-  *out << "</navigator>" << endl;
+  *out << "</navigator>" << std::endl;
 
 }
 
@@ -261,7 +261,7 @@ void TriggerWebInterface::GoToTriggerMonitorWI(xgi::Input * in, xgi::Output * ou
     *out << cgicc::HTMLDoctype(cgicc::HTMLDoctype::eStrict) << std::endl;
     *out << cgicc::html().set("lang", "en").set("dir","ltr") << std::endl;
     *out << cgicc::title("Simple Web") << std::endl;
-    *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << endl;
+    *out << cgicc::a("Visit the XDAQ Web site").set("href","http://xdaq.web.cern.ch") << std::endl;
 }
 
 
