@@ -1,10 +1,18 @@
-// $Id: WebLib.js,v 1.6 2007/05/30 13:37:59 wittich Exp $
+// $Id: WebLib.js,v 1.7 2007/06/04 12:19:36 wittich Exp $
 // $Log: WebLib.js,v $
+// Revision 1.8  2007/07/02 12:19:36  lorenzo
+// added checktree
+//
+// Revision 1.7  2007/06/04 12:19:36  wittich
+// fix bug in summary
+//
 // Revision 1.6  2007/05/30 13:37:59  wittich
 // Changes for summary
 //
 var http_request = false;
 var debug_print_mode = true;
+var step_by_step_mode = false;
+var jsurl = mygetContextURL();
 
 var gif_url;
 // strings containing the names of all active GifDisplays 
@@ -47,7 +55,7 @@ var n=0;
 
 //*************************************************************
 //*************************************************************
-//*************************************************************
+//*************************************************************/
 // found on the www - thanks to whomever
 function debug_print(text) {
     if (!debug_print_mode) return false;
@@ -83,7 +91,8 @@ function debug_print(text) {
     m.appendChild( document.createTextNode( text ) );
     
     e.appendChild( m );
-    
+     if(step_by_step_mode) alert("Click to go to next step.");
+   
     return true;
 }
 
@@ -147,6 +156,10 @@ function makeSummary(sourceName)
     }
   }
 }
+
+/*************************************************************/
+/*************************************************************/
+
 
 // callback to parse the XML list of objects and ....
 function SummaryListener(source)
@@ -267,6 +280,9 @@ function makeRequest(url, receiver_function)
   return;
 }
 
+/*************************************************************/
+/*************************************************************/
+
 function makeHttpRequest(url, sourceObj) 
 {
   http_request = false;
@@ -292,6 +308,7 @@ function makeHttpRequest(url, sourceObj)
 
 /*************************************************************/
 /*************************************************************/
+/*
 function updateMeListRequest(sourceObj)
 {
 
@@ -388,10 +405,11 @@ function updateMeListRequest(sourceObj)
    }
 	
 }
-
+*/
 
 /*************************************************************/
 /*************************************************************/
+/*
 // implement checkall box
 
 function checkAll(sourceName){
@@ -399,9 +417,10 @@ function checkAll(sourceName){
    for (i=0; i<document.forms[0].length; i++)
       if(document.forms[0].elements[i].name == sourceName) document.forms[0].elements[i].checked = true
 }
-
+*/
 /*************************************************************/
 /*************************************************************/
+/*
 // implement clearall box
 
 
@@ -410,7 +429,7 @@ function clearAll(sourceName){
    for (i=0; i<document.forms[0].length; i++)
       if(document.forms[0].elements[i].name == sourceName) document.forms[0].elements[i].checked = false
 }
-
+*/
 /*************************************************************/
 /*************************************************************/
 // loop on selected checkboxes and submit request for display
@@ -562,7 +581,7 @@ function updateMeView(display)
 function makeMeDisplayRequest(display)
 {
   url = getMeDisplayRequestURL(display);
-//  alert(url);
+  debug_print("url = " + url );
   // pass a reference to the updateGifURL function:
   makeRequest(url, updateMeGifURL); 
 }
@@ -686,15 +705,191 @@ function getStatusURL()
 }
 
 /*************************************************************/
-/*************************************************************/
-/*
-function getSourceRequestStatus(source)
-{ 
-    for(loop on the list){
-       if (document.getElementById(sourceList).name == source) 
-       return document.getElementById(sourceList).status;
-    }
+
+function updateMeListRequest(sourceObj)
+{
+
+  if (http_request.readyState == 4) 
+  {
+    if (http_request.status == 200) 
+    {
+
+      var xmldoc;
+      var directory_l;
+      var subscribe_l;
+
+// Load the xml elements on javascript lists:
+
+      if (http_request != false)
+      {
+        xmldoc = http_request.responseXML;
+        directory_l = xmldoc.getElementsByTagName('directory');
+      }
+
+     if(directory_l.length) {
+
+
+ 	var mypar = parent.frames['status'].document.getElementById('formsParId');
+
+ 	var myform = document.createElement("form");
+	    myform.setAttribute('action',"javascript:void(0)");
+  	    myform.setAttribute('name',sourceObj.name);
+	    myform.setAttribute('id',sourceObj.name);
+	    
+            myform.onsubmit = function() { return submitSelectedMe(sourceObj);};
+
+//	debug_print("myform id = " + myform.id );
+	 
+	var myline = document.createElement("br");
+	
+// begin form
+
+        var ulVec = new Array();	
+        var liVec = new Array();	
+	
+	ulVec[0] = document.createElement('ul');
+	ulVec[0].setAttribute('id','tree-checkmenu');
+	ulVec[0].setAttribute('class','checktree');
+	
+	liVec[0] = document.createElement('li');
+	
+//	debug_print("build ul "+'tree-checkmenu');
+		
+	
+	myform.appendChild(ulVec[0]);
+        mypar.appendChild(myform);
+
+
+// find minimum rank in tree (upper *useful* directory)
+
+ 
+ var rankMin = 9999; 
+ var rankMax = -1;
+ var dirName = new Array();
+ for(var i = 0; i < directory_l.length; i++) {
+    
+    var rank = directory_l[i].getAttribute("rank");
+    if(rank < rankMin) rankMin=rank;
+    if(rank > rankMax) rankMax=rank;
+ 
+ }
+
+//	  debug_print("rankMin " + rankMin + "; ranMax = " + rankMax + "; num dir = " + directory_l.length);
+
+	  var rank_old = 0;
+       
+	  for(var i = 0; i < directory_l.length; i++)
+ 	  {
+	      
+	      var dir = directory_l[i];
+	      var rank = dir.getAttribute("rank");
+ 	      var rankIndx = rank-rankMin+1; //starts from 0
+	      dirName = dir.getAttribute("name");
+	      
+              
+	      var changeRank = rank-rank_old;
+
+ 
+ 	      show_name = "show-"+dirName;
+//	      debug_print("build li " + show_name);
+ 	      liVec[rankIndx] = document.createElement('li');
+ 	      liVec[rankIndx].setAttribute('id',show_name);
+ 	      if(i==1) liVec[rankIndx].setAttribute('class','last');
+	      ulVec[rankIndx-1].appendChild(liVec[rankIndx]);
+	      
+ 	      check_name = "check-"+dirName;
+//	      debug_print("build checkbox " + check_name);
+ 	      var chbox = document.createElement('input');
+ 	      chbox.setAttribute('id',check_name);
+ 	      chbox.setAttribute('type','checkbox');
+	      chbox.setAttribute('value',"null");
+ 	      liVec[rankIndx].appendChild(chbox);
+
+ 	      label_name = dirName;
+// 	      debug_print("build label " + label_name);
+ 	      var label = document.createElement('label');
+  	      var labeltext = document.createTextNode(label_name)
+ 	      label.appendChild(labeltext);
+ 	      liVec[rankIndx].appendChild(label);
+ 
+ 	      count_name = "count-"+dirName;
+//	      debug_print("build span " + count_name);
+ 	      var myspan = document.createElement('span');
+ 	      myspan.setAttribute('id',count_name);
+ 	      myspan.setAttribute('class','count');
+ 	      liVec[rankIndx].appendChild(myspan);
+	      
+ 
+ 	      tree_name = "tree-"+dirName;
+// 	      debug_print("build lu " + tree_name);
+ 	      ulVec[rankIndx] = document.createElement('ul');
+ 	      ulVec[rankIndx].setAttribute('id',tree_name);
+	      liVec[rankIndx].appendChild(ulVec[rankIndx]);
+	      
+
+// elements
+	      var subscribe_l = dir.getElementsByTagName('subscribe');	
+              
+	      if(subscribe_l){
+	      
+	      for(var j = 0; j < subscribe_l.length; j++) {
+		 
+		 var elm = subscribe_l[j];
+		 var elmName = subscribe_l.item(j).firstChild.data;;
+		 
+		   var li = document.createElement('li');
+ 		   if(i==subscribe_l.length-1) li.setAttribute('class','last');
+ 		   ulVec[rankIndx].appendChild(li);
+
+ 		   check_name = "check-"+elmName;
+// 		   debug_print("element box " + label_name);
+ 		   var elbox = document.createElement('input');
+ 		   elbox.setAttribute('id',check_name);
+ 		   elbox.setAttribute('type','checkbox');
+	           elbox.setAttribute('value',elmName);
+	           elbox.setAttribute('name',sourceObj.name);
+ 		   li.appendChild(elbox);
+
+ 		   label_name = elmName;
+// 		   debug_print("element label " + label_name);
+ 		   var label = document.createElement('label');
+ 		   var labeltext = document.createTextNode(label_name)
+ 		   label.appendChild(labeltext);
+ 		   li.appendChild(label);
+
+		 }
+		 
+		} 
+
+
+	 
+               rank_old=rank;
+	  }	 
+
+	
+        getTreeList();
+
+// Write submit button
+
+	    var mydiv = document.createElement("div");
+            mydiv.setAttribute('align',"center");
+
+	    var subbutton = document.createElement('input');
+	    subbutton.setAttribute('type','submit');
+	    subbutton.setAttribute('id',sourceObj.name);
+	    subbutton.setAttribute('value','Subscribe!');
+            mydiv.appendChild(subbutton);
+	    myform.appendChild(mydiv);
+//            mypar.appendChild(myform);
+
+	    }
+      }
+      
+   }
 }
-*/
-/*************************************************************/
-/*************************************************************/
+
+/*******************************************************************************************/
+
+
+document.write("<script src=" + jsurl + "/temporary/CheckTree.js><\/script>"); // hacked to act on dynamic objects 
+//alert("<script src=" + jsurl + "/temporary/CheckTree.js><\/script>");
