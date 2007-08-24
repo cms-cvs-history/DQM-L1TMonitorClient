@@ -1,0 +1,5 @@
+    module l1TDTTPGClient = L1TDTTPGClient{
+        untracked bool saveOutput = true
+        untracked bool Standalone = false
+        untracked string outputFile = "L1TDTTPGClient.root"
+	}
