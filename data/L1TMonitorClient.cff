@@ -1,5 +1,7 @@
 include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cfi"
+include "DQM/L1TMonitorClient/data/L1TGTClient.cfi"
 
 sequence l1tmonitorClient = {
-l1TDTTPGClient
+#l1TDTTPGClient,
+l1TGTClient
 }
