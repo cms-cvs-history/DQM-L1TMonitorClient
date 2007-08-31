@@ -1,0 +1,6 @@
+    module l1TGTClient = L1TGTClient{
+        untracked bool saveOutput = true
+        untracked bool Standalone = true
+        untracked string outputFile = "L1TGTClient.root"
+        untracked string qualityTestName = "testYRange"    
+	}
