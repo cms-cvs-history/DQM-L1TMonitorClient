@@ -1,6 +1,7 @@
     module l1TGTClient = L1TGTClient{
         untracked bool saveOutput = true
         untracked bool Standalone = true
-        untracked string outputFile = "L1TGTClient.root"
+        untracked string outputDir = "/data1/dropbox/"
+        untracked string outputFile = "L1TClient"
         untracked string qualityTestName = "testYRange"    
 	}

@@ -1,5 +1,6 @@
     module l1TDTTPGClient = L1TDTTPGClient{
         untracked bool saveOutput = true
         untracked bool Standalone = true
+        untracked string outputDir = "/data1/dropbox/"
         untracked string outputFile = "L1TDTTPGClient.root"
 	}
