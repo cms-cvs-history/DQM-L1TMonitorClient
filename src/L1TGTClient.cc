@@ -35,6 +35,7 @@ L1TGTClient::L1TGTClient(const edm::ParameterSet& iConfig): L1TBaseClient()
 
 
   saveOutput = iConfig.getUntrackedParameter<bool>("saveOutput", false);
+  outputDir = iConfig.getUntrackedParameter<string>("/outputDir", "/data1/dropbox/");
   outputFile = iConfig.getUntrackedParameter<string>("outputFile", "L1TGTClient.root");
   stdalone = iConfig.getUntrackedParameter<bool>("Standalone",false);
   qualityCriterionName = iConfig.getUntrackedParameter<string>("qualityTestName","testYRange");
@@ -121,7 +122,13 @@ void L1TGTClient::endLuminosityBlock(const edm::LuminosityBlock & iLumiSection, 
 
   LogInfo("TriggerDQM")<<"[TriggerDQM]: end Lumi Section.";
 
-  //int ilumi = iLumiSection.id().luminosityBlock();
+int ilumi = iLumiSection.id().luminosityBlock();
+int irun = iLumiSection.run();
+
+stringstream runnum,lumisec; 
+runnum << irun;
+lumisec << ilumi;
+
 // if(stdalone) mui_->doMonitoring();
 
 
@@ -159,8 +166,12 @@ void L1TGTClient::endLuminosityBlock(const edm::LuminosityBlock & iLumiSection, 
      }
   
   this->getReport("L1TMonitor/QTests/normGTFEBx", dbe, qualityCriterionName);
+    
+//    outputFile += "_" + runnum.str() + "_" + lumisec.str() +".root";
+    outputFile = outputDir + "/" + outputFile + "_" + runnum.str() + ".root";
+//    dbe->save(parameters.getUntrackedParameter<string>("outputFile", rootFile));
  
- 	      dbe->save(outputFile);
+    dbe->save(outputFile);
 
 }
 

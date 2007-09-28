@@ -15,7 +15,7 @@
 //
 // Original Author:  Lorenzo Agostino
 //         Created:  Thu Jun 28 11:32:01 CEST 2007
-// $Id: L1TDTTPGClient.h,v 1.2 2007/08/29 16:48:33 lorenzo Exp $
+// $Id: L1TDTTPGClient.h,v 1.3 2007/09/02 01:14:59 wittich Exp $
 //
 //
 
@@ -60,6 +60,7 @@ class L1TDTTPGClient : public edm::EDAnalyzer, public L1TBaseClient {
 
       DaqMonitorBEInterface *dbe;
       std::string outputFile;
+      std::string outputDir;
       bool stdalone;
       bool saveOutput;
       bool getMESubscriptionListFromFile;

@@ -35,6 +35,7 @@ L1TDTTPGClient::L1TDTTPGClient(const edm::ParameterSet& iConfig): L1TBaseClient(
 
 
   saveOutput = iConfig.getUntrackedParameter<bool>("saveOutput", false);
+  outputDir = iConfig.getUntrackedParameter<string>("outputDir", "/data1/dropbox/");
   outputFile = iConfig.getUntrackedParameter<string>("outputFile", "L1TMuonMonitor.root");
   stdalone = iConfig.getUntrackedParameter<bool>("Standalone",false);
   

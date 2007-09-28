@@ -15,7 +15,7 @@
 //
 // Original Author:  Lorenzo Agostino
 //         Created:  Thu Jun 28 11:32:01 CEST 2007
-// $Id: L1TGTClient.h,v 1.1 2007/08/29 16:48:00 lorenzo Exp $
+// $Id: L1TGTClient.h,v 1.2 2007/09/02 01:14:59 wittich Exp $
 //
 //
 
@@ -60,6 +60,7 @@ class L1TGTClient : public edm::EDAnalyzer, public L1TBaseClient {
 
       DaqMonitorBEInterface *dbe;
       std::string outputFile;
+      std::string outputDir;
       std::string qualityCriterionName;
       bool stdalone;
       bool saveOutput;
