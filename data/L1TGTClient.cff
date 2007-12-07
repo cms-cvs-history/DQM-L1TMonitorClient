@@ -1,4 +1,0 @@
-include "DQM/L1TMonitorClient/data/L1TGTClient.cfi"
-
-
-sequence l1tgtseqClient = {l1TGTClient}
