@@ -1,5 +1,3 @@
-include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cfi"
-include "DQM/L1TMonitorClient/data/L1TGTClient.cfi"
 include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
 
     # use include file for dqmEnv dqmSaver
