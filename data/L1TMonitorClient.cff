@@ -1,4 +1,5 @@
 include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
+include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
 
     # use include file for dqmEnv dqmSaver
        include "DQMServices/Components/test/dqm_onlineEnv.cfi"
@@ -18,6 +19,21 @@ include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
        // replace dqmSaver.saveAtJobEnd = false
        # will add switch to select histograms to be saved soon
 
+    # run the quality tests as defined in QualityTests.xml
+#    module qTester = QualityTester {
+#	untracked int32 QualityTestPrescaler = 5000
+#        untracked int32 prescaleFactor = 1
+#        untracked bool getQualityTestsFromFile = true
+#        untracked string qtList = "QualityTests.xml"
+#        untracked string reportThreshold = "red" 
+#    }
+
+    module qTester = QualityTester {
+      untracked string qtList = "QualityTests.xml"
+      untracked bool getQualityTestsFromFile = true
+      untracked int32 QualityTestPrescaler = 1
+    }
+
     #########################################################
     #### END ################################################
     #########################################################
@@ -25,6 +41,7 @@ include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
 path l1tmonitorClient = {
 #l1TDTTPGClient,
 #l1TGTClient,
+qTester,
 l1thcalseqClient,
 dqmEnv,
 dqmSaver
