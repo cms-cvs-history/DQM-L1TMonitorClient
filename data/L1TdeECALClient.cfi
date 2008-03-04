@@ -1,0 +1,5 @@
+    module l1tdeEcalClient = L1TdeECALClient{
+        untracked string monitorDir = "L1T/L1DEMonEcal"
+ 	untracked int32 prescaleLS = -1
+	untracked int32 prescaleEvt = 500
+       }
