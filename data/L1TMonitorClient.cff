@@ -1,5 +1,7 @@
 include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
+include "DQM/L1TMonitorClient/data/L1TDTTFClient.cff"
 include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
+include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
 
     # use include file for dqmEnv dqmSaver
        include "DQMServices/Components/test/dqm_onlineEnv.cfi"
@@ -28,21 +30,22 @@ include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
 #        untracked string reportThreshold = "red" 
 #    }
 
-    module qTester = QualityTester {
-      untracked string qtList = "QualityTests.xml"
-      untracked bool getQualityTestsFromFile = true
-      untracked int32 QualityTestPrescaler = 1
-    }
+#    module qTester = QualityTester {
+#      untracked string qtList = "QualityTests.xml"
+#      untracked bool getQualityTestsFromFile = true
+#      untracked int32 QualityTestPrescaler = 1
+#    }
 
     #########################################################
     #### END ################################################
     #########################################################
 
 path l1tmonitorClient = {
-#l1TDTTPGClient,
-#l1TGTClient,
-qTester,
 l1thcalseqClient,
-dqmEnv,
+#l1tdttfseqClient,
+#l1tdttpgseqClient,
+#qTester , 
+l1tdeEcalseqClient, 
+dqmEnv ,
 dqmSaver
 }
