@@ -43,7 +43,7 @@ include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
 path l1tmonitorClient = {
 l1thcalseqClient,
 #l1tdttfseqClient,
-#l1tdttpgseqClient,
+l1tdttpgseqClient,
 #qTester , 
 l1tdeEcalseqClient, 
 dqmEnv ,
