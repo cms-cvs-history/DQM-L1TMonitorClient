@@ -1,3 +1,9 @@
 include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cfi"
 
-sequence l1tdttpgseqClient = {l1tdttpgClient}
+module l1tdttpgqTester = QualityTester {
+  untracked string qtList = "dttpgQualityTests.xml"
+  untracked bool getQualityTestsFromFile = true
+  untracked int32 QualityTestPrescaler = 500
+}
+
+sequence l1tdttpgseqClient = {l1tdttpgqTester,l1tdttpgClient}
