@@ -1,5 +1,6 @@
     module l1tdttpgClient = L1TDTTPGClient{
-        untracked string output_dir = "L1T/L1TDTTPG"
+        untracked string output_dir = "L1T/L1TDTTPG/Tests"
+	untracked string input_dir  = "L1T/L1TDTTPG"
  	untracked int32 prescaleLS = -1
 	untracked int32 prescaleEvt = 500
        }
