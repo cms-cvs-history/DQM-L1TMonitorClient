@@ -3,15 +3,15 @@ include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
 include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
 include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
 
-    # use include file for dqmEnv dqmSaver
+#    # use include file for dqmEnv dqmSaver
        include "DQMServices/Components/test/dqm_onlineEnv.cfi"
-       # put your subsystem name here:
-       # DT, Ecal, Hcal, SiStrip, Pixel, RPC, CSC, L1T
-       # (this goes into the filename)
-       replace dqmSaver.fileName      = "L1T"
-       replace dqmSaver.dirName       = "."
-       # (this goes into the foldername)
-       replace dqmEnv.subSystemFolder = "Env"
+#       # put your subsystem name here:
+#       # DT, Ecal, Hcal, SiStrip, Pixel, RPC, CSC, L1T
+#       # (this goes into the filename)
+#       replace dqmSaver.fileName      = "L1T"
+#       replace dqmSaver.dirName       = "."
+#       # (this goes into the foldername)
+#       replace dqmEnv.subSystemFolder = "Env"
 
        # optionally change fileSaving  conditions
        // replace dqmSaver.prescaleLS =   -1
@@ -42,9 +42,7 @@ include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
 
 path l1tmonitorClient = {
 l1thcalseqClient,
-#l1tdttfseqClient,
 l1tdttpgseqClient,
-#qTester , 
 l1tdeEcalseqClient, 
 dqmEnv ,
 dqmSaver
