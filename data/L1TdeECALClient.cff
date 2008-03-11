@@ -2,7 +2,7 @@ include "DQM/L1TMonitorClient/data/L1TdeECALClient.cfi"
 
 module l1tdeEcalqTester = QualityTester {
 #  untracked string qtList = "DQM/L1TMonitorClient/test/deECALQualityTests.xml"
-  untracked string qtList = "deECALQualityTests.xml"
+  untracked string qtList = "l1tdeECALQualityTests.xml"
   untracked bool getQualityTestsFromFile = true
   untracked int32 QualityTestPrescaler = 500
 }
