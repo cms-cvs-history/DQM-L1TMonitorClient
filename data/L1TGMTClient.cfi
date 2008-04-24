@@ -1,0 +1,7 @@
+    module l1tgmtClient = L1TGMTClient{
+        untracked string monitorName = "L1T/L1TGMT"
+        untracked string output_dir = "L1T/L1TGMT/Client"
+	    untracked string input_dir  = "L1T/L1TGMT"
+ 	    untracked int32 prescaleLS = -1
+	    untracked int32 prescaleEvt = 500
+    }

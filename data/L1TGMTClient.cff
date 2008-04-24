@@ -1,0 +1,3 @@
+include "DQM/L1TMonitorClient/data/L1TGMTClient.cfi"
+
+sequence l1tgmtseqClient = {l1tgmtClient}
