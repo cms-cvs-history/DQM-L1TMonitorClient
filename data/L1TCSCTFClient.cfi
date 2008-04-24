@@ -1,0 +1,7 @@
+    module l1tcsctfClient = L1TCSCTFClient{
+        untracked bool verbose = false
+        untracked string input_dir  = "L1T/L1TCSCTF"
+        untracked string output_dir = "L1T/L1TCSCTF/QualityTests"
+ 	untracked int32 prescaleLS  = -1
+	untracked int32 prescaleEvt = 500
+       }
