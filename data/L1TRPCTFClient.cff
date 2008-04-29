@@ -1,0 +1,4 @@
+include "DQM/L1TMonitorClient/data/L1TRPCTFClient.cfi"
+
+sequence l1RPCTFClientSeq = { l1trpctfClient }
+
