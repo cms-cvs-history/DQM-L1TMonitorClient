@@ -1,0 +1,9 @@
+include "DQM/L1TMonitorClient/data/L1TDTTFClient.cfi"
+
+module l1tdttfqTester = QualityTester {
+  untracked string qtList = "L1TDTTF_QualityTests.xml"
+  untracked bool getQualityTestsFromFile = true
+  untracked int32 QualityTestPrescaler = 500
+}
+
+sequence l1tdttpgseqClient = {l1tdttfqTester,l1tdttpgClient}
