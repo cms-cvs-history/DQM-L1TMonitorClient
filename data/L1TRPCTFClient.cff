@@ -1,4 +1,11 @@
 include "DQM/L1TMonitorClient/data/L1TRPCTFClient.cfi"
 
-sequence l1RPCTFClientSeq = { l1trpctfClient }
+module l1trpctfqTester = QualityTester {
+  untracked string qtList = "L1TRPCTF_QualityTests.xml"
+  untracked bool getQualityTestsFromFile = true
+  untracked int32 QualityTestPrescaler = 1
+}
+
+
+sequence l1RPCTFClientSeq = { l1trpctfqTester,l1trpctfClient }
 
