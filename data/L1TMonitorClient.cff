@@ -1,49 +1,28 @@
-include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
+#include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
 #include "DQM/L1TMonitorClient/data/L1TDTTFClient.cff"
-include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
-include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
+#include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
+#include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
+include "DQM/L1TMonitorClient/data/L1TGMTClient.cff"
+#include "DQM/L1TMonitorClient/data/L1TGCTClient.cff"
+#include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
+include "DQM/L1TMonitorClient/data/L1TCSCTFClient.cff"
 
 #    # use include file for dqmEnv dqmSaver
-       include "DQMServices/Components/test/dqm_onlineEnv.cfi"
-#       # put your subsystem name here:
-#       # DT, Ecal, Hcal, SiStrip, Pixel, RPC, CSC, L1T
-#       # (this goes into the filename)
-#       replace dqmSaver.fileName      = "L1T"
-#       replace dqmSaver.dirName       = "."
-#       # (this goes into the foldername)
-#       replace dqmEnv.subSystemFolder = "Env"
+#       include "DQMServices/Components/test/dqm_onlineEnv.cfi"
+       include "DQMServices/Components/data/DQMEnvironment.cfi"
 
-       # optionally change fileSaving  conditions
-       // replace dqmSaver.prescaleLS =   -1
-       // replace dqmSaver.prescaleTime = -1 # in minutes
-       // replace dqmSaver.prescaleEvt =  -1
-       // replace dqmSaver.saveAtRunEnd = true
-       // replace dqmSaver.saveAtJobEnd = false
-       # will add switch to select histograms to be saved soon
 
-    # run the quality tests as defined in QualityTests.xml
-#    module qTester = QualityTester {
-#	untracked int32 QualityTestPrescaler = 5000
-#        untracked int32 prescaleFactor = 1
-#        untracked bool getQualityTestsFromFile = true
-#        untracked string qtList = "QualityTests.xml"
-#        untracked string reportThreshold = "red" 
-#    }
-
-#    module qTester = QualityTester {
-#      untracked string qtList = "QualityTests.xml"
-#      untracked bool getQualityTestsFromFile = true
-#      untracked int32 QualityTestPrescaler = 1
-#    }
 
     #########################################################
     #### END ################################################
     #########################################################
 
 path l1tmonitorClient = {
-l1thcalseqClient,
-l1tdttpgseqClient,
-l1tdeEcalseqClient, 
-dqmEnv ,
+//l1thcalseqClient,
+//l1tdttpgseqClient,
+//l1tdeEcalseqClient,
+l1tgmtseqClient, 
+l1tcsctfseqClient,
+dqmEnv, 
 dqmSaver
 }
