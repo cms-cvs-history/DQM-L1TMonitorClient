@@ -1,6 +1,6 @@
 
 module l1tdemonTester = QualityTester {
-  untracked FileInPath qtList = "DQM/Integration/test/L1TEmulator_QualityTests.xml"
+  untracked FileInPath qtList = "DQM/L1TMonitorClient/data/L1TEmulator_QualityTests.xml"
   untracked bool getQualityTestsFromFile = true
   untracked int32 QualityTestPrescaler = 500
 }

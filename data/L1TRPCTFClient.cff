@@ -1,7 +1,7 @@
 include "DQM/L1TMonitorClient/data/L1TRPCTFClient.cfi"
 
 module l1trpctfqTester = QualityTester {
-  untracked FileInPath qtList = "DQM/Integration/test/L1TRPCTF_QualityTests.xml"
+  untracked FileInPath qtList = "DQM/L1TMonitorClient/data/L1TRPCTF_QualityTests.xml"
   untracked bool getQualityTestsFromFile = true
   untracked int32 QualityTestPrescaler = 1
 }
