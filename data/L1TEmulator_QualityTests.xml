@@ -1,0 +1,21 @@
+<TESTSCONFIGURATION>
+
+
+ 
+<QTEST name="deDiffInXRange_ErrorFlag">
+	 <TYPE>ContentsXRange</TYPE> 
+	 <PARAM name="error">0.90</PARAM>
+	 <PARAM name="warning">0.00</PARAM>
+	 <PARAM name="xmin">0.0</PARAM>
+	 <PARAM name="xmax">1.0</PARAM>
+</QTEST>
+
+
+
+
+<LINK name="*ErrorFlag*">
+	<TestName activate="true">deDiffInXRange_ErrorFlag</TestName>
+</LINK>
+
+
+</TESTSCONFIGURATION>
