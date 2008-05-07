@@ -1,14 +1,14 @@
 <TESTSCONFIGURATION>
 
 <QTEST name="DeadChannels">
-	 <TYPE>DeadChannelROOT</TYPE>	 
+	 <TYPE>DeadChannel</TYPE>	 
 	 <PARAM name="error">0.99</PARAM>
 	 <PARAM name="warning">0.50</PARAM>
 	 <PARAM name="threshold">3</PARAM>
 </QTEST>
 
 <QTEST name="HotChannels">
-	 <TYPE>NoisyChannelROOT</TYPE>   
+	 <TYPE>NoisyChannel</TYPE>   
 	 <PARAM name="error">0.80</PARAM>
 	 <PARAM name="warning">0.70</PARAM>
 	 <PARAM name="tolerance">50</PARAM>
