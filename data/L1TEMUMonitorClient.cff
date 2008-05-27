@@ -1,0 +1,18 @@
+#include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
+include "DQM/L1TMonitorClient/data/L1TDEMONClient.cff"
+include "DQM/L1TMonitorClient/data/L1TEMUEventInfoClient.cff"
+       include "DQMServices/Components/data/DQMEnvironment.cfi"
+
+
+
+    #########################################################
+    #### END ################################################
+    #########################################################
+
+path l1temumonitorClient = {
+//l1tdeEcalseqClient,
+l1tdemonseqClient,
+l1temuEventInfoseqClient,
+dqmEnv, 
+dqmSaver
+}
