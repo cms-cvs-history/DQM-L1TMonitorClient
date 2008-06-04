@@ -1,6 +1,6 @@
    module l1trpctfClient = L1TRPCTFClient {
        untracked string input_dir = "L1T/L1TRPCTF"
-       untracked string output_dir = "L1T/L1TRPCTFClient"
+       untracked string output_dir = "L1T/L1TRPCTF/Client"
        untracked int32 prescaleEvt = 1
        untracked bool verbose = false
    }
