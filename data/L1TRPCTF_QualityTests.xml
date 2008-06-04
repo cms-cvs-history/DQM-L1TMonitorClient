@@ -8,6 +8,13 @@
    <PARAM name="warning">0.99</PARAM>
 </QTEST>
 
+<QTEST name="synchro">
+   <TYPE>ContentsYRange</TYPE>     
+   <PARAM name="ymin">0.00</PARAM>
+   <PARAM name="ymax">0.15</PARAM>
+   <PARAM name="error">0.95</PARAM>
+   <PARAM name="warning">0.99</PARAM>
+</QTEST>
 
 <QTEST name="DeadChannels">
 	 <TYPE>DeadChannel</TYPE>	 
@@ -36,6 +43,9 @@
    <TestName activate="true">DeadChannels</TestName>
 </LINK>
 
+<LINK name="*RPCTF_synchronization*">
+   <TestName activate="true">synchro</TestName> 
+</LINK>
 
 
 
