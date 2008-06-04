@@ -35,7 +35,7 @@
 <!-- <LINK name="L1T/L1TRPCTF/RPCTF_phi_valuepacked_norm"> -->
 <LINK name="*RPCTF_phi_valuepacked_norm*">
    <TestName activate="true">rpcPhiOcc</TestName> 
-   <TestName activate="false">DeadChannels</TestName>
+   <TestName activate="true">DeadChannels</TestName>
 </LINK>
 
 <LINK name="*RPCTF_muons_tower_phipacked*">
