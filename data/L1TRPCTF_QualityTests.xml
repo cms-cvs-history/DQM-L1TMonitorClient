@@ -34,7 +34,7 @@
 <!-- <LINK name="L1T/L1TRPCTF/RPCTF_bx"> -->
 <!-- <LINK name="L1T/L1TRPCTF/RPCTF_phi_valuepacked_norm"> -->
 <LINK name="*RPCTF_phi_valuepacked_norm*">
-   <TestName activate="true">rpcPhiOcc</TestName> 
+   <TestName activate="false">rpcPhiOcc</TestName> 
    <TestName activate="true">DeadChannels</TestName>
 </LINK>
 
