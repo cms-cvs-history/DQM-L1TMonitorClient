@@ -6,6 +6,7 @@
 	<PARAM name="warning">0.0</PARAM>
 	<PARAM name="ymin">0.0</PARAM>
 	<PARAM name="ymax">1.0</PARAM>
+        <PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
 <LINK name="*csctferrors_*">

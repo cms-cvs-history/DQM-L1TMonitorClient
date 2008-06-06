@@ -6,6 +6,7 @@
    <PARAM name="ymax">0.015</PARAM>
    <PARAM name="error">0.95</PARAM>
    <PARAM name="warning">0.99</PARAM>
+   <PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
 <QTEST name="synchro">
@@ -14,6 +15,7 @@
    <PARAM name="ymax">0.3</PARAM>
    <PARAM name="error">0.95</PARAM>
    <PARAM name="warning">0.99</PARAM>
+   <PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
 <QTEST name="DeadChannels">
