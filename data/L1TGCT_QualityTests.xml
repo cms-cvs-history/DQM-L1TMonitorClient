@@ -24,5 +24,35 @@
 	<TestName activate="true">DeadChannels</TestName>
 	<TestName activate="true">HotChannels</TestName>
 </LINK>
-        
+       
+<LINK name="ForJetsOccPhi">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
+<LINK name="*CenJetsOccPhi">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
+<LINK name="TauJetsOccPhi">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
+<LINK name="ForJetsOccEta">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
+<LINK name="*CenJetsOccEta">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
+<LINK name="TauJetsOccEta">
+	<TestName activate="true">DeadChannels</TestName>
+	<TestName activate="true">HotChannels</TestName>
+</LINK>
+
 </TESTSCONFIGURATION>
