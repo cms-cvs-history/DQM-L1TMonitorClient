@@ -42,7 +42,7 @@
 
 <LINK name="*RPCTF_muons_tower_phipacked*">
    <TestName activate="true">HotChannels</TestName> 
-   <TestName activate="true">DeadChannels</TestName>
+   <TestName activate="false">DeadChannels</TestName>
 </LINK>
 
 <LINK name="*RPCTF_synchronization*">
