@@ -3,7 +3,7 @@ include "DQM/L1TMonitorClient/data/L1TCSCTFClient.cfi"
 module l1tcsctfTester = QualityTester {
   untracked FileInPath qtList = "DQM/L1TMonitorClient/data/L1TCSCTF_QualityTests.xml"
   untracked bool getQualityTestsFromFile = true
-  untracked int32 QualityTestPrescaler = 500
+  untracked int32 QualityTestPrescaler = 1
 }
 
 sequence l1tcsctfseqClient = {l1tcsctfTester,l1tcsctfClient}

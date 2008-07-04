@@ -15,8 +15,8 @@
 	 <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
-<LINK name="*RctNonIsoEmOccEtaPhi">
-	<TestName activate="true">DeadChannels</TestName>
+
+<LINK name="*GMT_etaphi">
 	<TestName activate="true">HotChannels</TestName>
 </LINK>
 

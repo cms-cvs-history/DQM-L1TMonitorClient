@@ -1,30 +1,19 @@
-#include "DQM/L1TMonitorClient/data/L1THcalClient.cff"
-#include "DQM/L1TMonitorClient/data/L1TDTTFClient.cff"
-#include "DQM/L1TMonitorClient/data/L1TDTTPGClient.cff"
-#include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
+include "DQM/L1TMonitorClient/data/L1TEventInfoClient.cff"
+include "DQMServices/Components/data/DQMEnvironment.cfi"
 include "DQM/L1TMonitorClient/data/L1TGMTClient.cff"
 include "DQM/L1TMonitorClient/data/L1TGCTClient.cff"
-#include "DQM/L1TMonitorClient/data/L1TdeECALClient.cff"
 include "DQM/L1TMonitorClient/data/L1TCSCTFClient.cff"
 include "DQM/L1TMonitorClient/data/L1TDEMONClient.cff"
 include "DQM/L1TMonitorClient/data/L1TRPCTFClient.cff"
-include "DQM/L1TMonitorClient/data/L1TEventInfoClient.cff"
-#    # use include file for dqmEnv dqmSaver
-#       include "DQMServices/Components/test/dqm_onlineEnv.cfi"
-       include "DQMServices/Components/data/DQMEnvironment.cfi"
-
-
-
+include "DQM/L1TMonitorClient/data/L1TDTTFClient.cff"
     #########################################################
     #### END ################################################
     #########################################################
 
 path l1tmonitorClient = {
-//l1thcalseqClient,
-//l1tdttpgseqClient,
-//l1tdeEcalseqClient,
 l1tgmtseqClient, 
 l1tcsctfseqClient,
+l1tdttpgseqClient,
 l1trpctfseqClient,
 l1tdemonseqClient,
 l1tGctseqClient,

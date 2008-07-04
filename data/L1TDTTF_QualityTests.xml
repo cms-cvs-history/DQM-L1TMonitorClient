@@ -10,8 +10,25 @@
 	<PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
- 
+<QTEST name="DeadChannels">
+         <TYPE>DeadChannel</TYPE>
+         <PARAM name="error">0.99</PARAM>
+         <PARAM name="warning">0.50</PARAM>
+         <PARAM name="threshold">3</PARAM>
+</QTEST>
 
+<QTEST name="HotChannels">
+         <TYPE>NoisyChannel</TYPE>
+         <PARAM name="error">0.80</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+         <PARAM name="tolerance">50</PARAM>
+         <PARAM name="neighbours">3</PARAM>
+</QTEST>
+
+
+<LINK name="*dttf_p_phi_eta">
+        <TestName activate="true">HotChannels</TestName>
+</LINK>
 
 <LINK name="*test*">
 	<TestName activate="false">deDiffInRange</TestName>

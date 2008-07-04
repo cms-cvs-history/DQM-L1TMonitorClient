@@ -1,3 +1,10 @@
 include "DQM/L1TMonitorClient/data/L1TGMTClient.cfi"
 
-sequence l1tgmtseqClient = {l1tgmtClient}
+module l1tgmtqTester = QualityTester {
+  untracked FileInPath  qtList = "DQM/L1TMonitorClient/data/L1TGMT_QualityTests.xml"
+  untracked bool getQualityTestsFromFile = true
+  untracked int32 QualityTestPrescaler = 1
+}
+
+
+sequence l1tgmtseqClient = {l1tgmtqTester,l1tgmtClient}

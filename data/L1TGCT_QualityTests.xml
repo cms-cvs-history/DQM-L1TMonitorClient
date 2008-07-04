@@ -15,6 +15,11 @@
 	 <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
+
+<LINK name="*IsoEmOccEtaPhi">
+        <TestName activate="true">HotChannels</TestName>
+</LINK>
+
 <LINK name="*IsoEmOccEta">
 	<TestName activate="true">DeadChannels</TestName>
 	<TestName activate="true">HotChannels</TestName>
