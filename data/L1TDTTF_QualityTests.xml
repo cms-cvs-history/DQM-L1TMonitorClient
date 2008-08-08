@@ -26,7 +26,18 @@
 </QTEST>
 
 
-<LINK name="*dttf_p_phi_eta">
+<QTEST name="CompareHist">
+         <TYPE>Comp2RefChi2</TYPE>
+         <PARAM name="testparam">0</PARAM>
+         <PARAM name="error">0.30</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+</QTEST>
+
+<LINK name="*Integrated Packed *">
+        <TestName activate="true">CompareHist</TestName>
+</LINK>
+
+<LINK name="*Occupancy Summary">
         <TestName activate="true">HotChannels</TestName>
 </LINK>
 
