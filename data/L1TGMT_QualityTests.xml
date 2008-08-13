@@ -7,17 +7,18 @@
 	 <PARAM name="threshold">3</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels">
+<QTEST name="HotChannels_GMT">
 	 <TYPE>NoisyChannel</TYPE>   
 	 <PARAM name="error">0.80</PARAM>
 	 <PARAM name="warning">0.70</PARAM>
-	 <PARAM name="tolerance">50</PARAM>
+	 <PARAM name="tolerance">10</PARAM>
 	 <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
 
 <LINK name="*GMT_etaphi">
-	<TestName activate="true">HotChannels</TestName>
+        <TestName activate="true">HotChannels_GMT</TestName>
 </LINK>
+
 
 </TESTSCONFIGURATION>
