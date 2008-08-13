@@ -17,14 +17,29 @@
          <PARAM name="threshold">3</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels">
+<QTEST name="HotChannels_DTTF_pt">
          <TYPE>NoisyChannel</TYPE>
-         <PARAM name="error">0.80</PARAM>
-         <PARAM name="warning">0.70</PARAM>
-         <PARAM name="tolerance">50</PARAM>
-         <PARAM name="neighbours">3</PARAM>
+         <PARAM name="error">0.90</PARAM>
+         <PARAM name="warning">0.95</PARAM>
+         <PARAM name="tolerance">2.0</PARAM>
+         <PARAM name="neighbours">2</PARAM>
 </QTEST>
 
+<QTEST name="HotChannels_DTTF_phi">
+         <TYPE>NoisyChannel</TYPE>
+         <PARAM name="error">0.30</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+         <PARAM name="tolerance">10.0</PARAM>
+         <PARAM name="neighbours">2</PARAM>
+</QTEST>
+
+<QTEST name="HotChannels_DTTF_2D">
+         <TYPE>NoisyChannel</TYPE>
+         <PARAM name="error">0.99</PARAM>
+         <PARAM name="warning">0.99</PARAM>
+         <PARAM name="tolerance">0.5</PARAM>
+         <PARAM name="neighbours">2</PARAM>
+</QTEST>
 
 <QTEST name="CompareHist">
          <TYPE>Comp2RefChi2</TYPE>
@@ -33,13 +48,24 @@
          <PARAM name="warning">0.70</PARAM>
 </QTEST>
 
+
 <LINK name="*Integrated Packed *">
         <TestName activate="true">CompareHist</TestName>
 </LINK>
 
 <LINK name="*Occupancy Summary">
-        <TestName activate="true">HotChannels</TestName>
+        <TestName activate="true">HotChannels_DTTF_2D</TestName>
 </LINK>
+
+
+<LINK name="*Integrated Packed Pt">
+        <TestName activate="true">HotChannels_DTTF_pt</TestName>
+</LINK>
+
+<LINK name="*Integrated Packed Phi">
+        <TestName activate="true">HotChannels_DTTF_phi</TestName>
+</LINK>
+
 
 <LINK name="*test*">
 	<TestName activate="false">deDiffInRange</TestName>
