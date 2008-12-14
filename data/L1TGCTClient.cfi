@@ -1,5 +1,0 @@
-module l1tGctClient = L1TGCTClient{
-    untracked string monitorDir = "L1T/L1TGCT"
-    untracked int32 prescaleLS = -1
-    untracked int32 prescaleEvt = 1
-}

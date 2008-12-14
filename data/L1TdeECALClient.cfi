@@ -1,6 +1,0 @@
-    module l1tdeEcalClient = L1TdeECALClient{
-        untracked bool verbose = false
-        untracked string monitorDir = "L1TEMU/xpert/Ecal/"
- 	untracked int32 prescaleLS = -1
-	untracked int32 prescaleEvt = 500
-       }

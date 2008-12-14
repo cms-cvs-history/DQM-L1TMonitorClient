@@ -1,7 +1,0 @@
-    module l1THcalClient = L1THcalClient{
-        //untracked bool saveOutput = true
-        //untracked bool Standalone = false
-        //untracked string outputFile = "L1THcalClient.root"
-	untracked string output_dir = "L1T/Hcal/"
-        }
-

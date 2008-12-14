@@ -1,3 +1,0 @@
-include "DQM/L1TMonitorClient/data/L1THcalClient.cfi"
-
-sequence l1thcalseqClient = {l1THcalClient}

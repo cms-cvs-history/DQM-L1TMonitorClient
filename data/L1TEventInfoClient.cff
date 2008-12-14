@@ -1,5 +1,0 @@
-include "DQM/L1TMonitorClient/data/L1TEventInfoClient.cfi"
-
-
-sequence l1tEventInfoseqClient = {l1tEventInfoClient}
-

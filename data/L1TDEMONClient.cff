@@ -1,8 +1,0 @@
-
-module l1tdemonTester = QualityTester {
-  untracked FileInPath qtList = "DQM/L1TMonitorClient/data/L1TEmulator_QualityTests.xml"
-  untracked bool getQualityTestsFromFile = true
-  untracked int32 QualityTestPrescaler = 500
-}
-
-sequence l1tdemonseqClient = {l1tdemonTester}
