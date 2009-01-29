@@ -4,7 +4,7 @@
 	 <TYPE>DeadChannel</TYPE>	 
 	 <PARAM name="error">0.40</PARAM>
 	 <PARAM name="warning">0.20</PARAM>
-	 <PARAM name="threshold">3</PARAM>
+	 <PARAM name="threshold">1</PARAM>
          <PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
@@ -12,7 +12,7 @@
 	 <TYPE>NoisyChannel</TYPE>   
 	 <PARAM name="error">0.90</PARAM>
 	 <PARAM name="warning">0.80</PARAM>
-	 <PARAM name="tolerance">0.5</PARAM>
+	 <PARAM name="tolerance">2</PARAM>
 	 <PARAM name="neighbours">1</PARAM>
 </QTEST>
 
