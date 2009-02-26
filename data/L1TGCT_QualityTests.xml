@@ -1,64 +1,40 @@
 <TESTSCONFIGURATION>
 
-<QTEST name="DeadChannels">
+<QTEST name="DeadChannels_GCT_2D">
 	 <TYPE>DeadChannel</TYPE>	 
 	 <PARAM name="error">0.99</PARAM>
 	 <PARAM name="warning">0.50</PARAM>
-	 <PARAM name="threshold">3</PARAM>
+	 <PARAM name="threshold">0</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels_GCT">
+<QTEST name="HotChannels_GCT_2D">
 	 <TYPE>NoisyChannel</TYPE>   
-	 <PARAM name="error">0.30</PARAM>
+	 <PARAM name="error">0.80</PARAM>
 	 <PARAM name="warning">0.70</PARAM>
 	 <PARAM name="tolerance">10</PARAM>
 	 <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
 
-<LINK name="*IsoEmOccEtaPhi">
-        <TestName activate="true">HotChannels_GCT</TestName>
-</LINK>
-<!--
-<LINK name="*IsoEmOccEta">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
+<LINK name="*IsoEmRankEtaPhi">
+        <TestName activate="true">HotChannels_GCT_2D</TestName>
+        <TestName activate="true">DeadChannels_GCT_2D</TestName>
 </LINK>
 
-<LINK name="*IsoEmOccPhi">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
-</LINK>
-       
-<LINK name="ForJetsOccPhi">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
+<LINK name="*NonIsoEmRankEtaPhi">
+        <TestName activate="true">HotChannels_GCT_2D</TestName>
+        <TestName activate="true">DeadChannels_GCT_2D</TestName>
 </LINK>
 
-<LINK name="*CenJetsOccPhi">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
+<LINK name="*AllJetsEtEtaPhi">
+        <TestName activate="true">HotChannels_GCT_2D</TestName>
+        <TestName activate="true">DeadChannels_GCT_2D</TestName>
 </LINK>
 
-<LINK name="TauJetsOccPhi">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
+<LINK name="*TauJetsEtEtaPhi">
+        <TestName activate="true">HotChannels_GCT_2D</TestName>
+        <TestName activate="true">DeadChannels_GCT_2D</TestName>
 </LINK>
 
-<LINK name="ForJetsOccEta">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
-</LINK>
-
-<LINK name="*CenJetsOccEta">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
-</LINK>
-
-<LINK name="TauJetsOccEta">
-	<TestName activate="true">DeadChannels</TestName>
-	<TestName activate="true">HotChannels</TestName>
-</LINK>
--->
 
 </TESTSCONFIGURATION>

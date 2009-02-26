@@ -1,13 +1,13 @@
 <TESTSCONFIGURATION>
 
-<QTEST name="DeadChannels">
+<QTEST name="DeadChannels_RCT_2D">
 	 <TYPE>DeadChannel</TYPE>	 
 	 <PARAM name="error">0.99</PARAM>
 	 <PARAM name="warning">0.50</PARAM>
-	 <PARAM name="threshold">3</PARAM>
+	 <PARAM name="threshold">0</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels_RCT">
+<QTEST name="HotChannels_RCT_2D">
 	 <TYPE>NoisyChannel</TYPE>   
 	 <PARAM name="error">0.80</PARAM>
 	 <PARAM name="warning">0.70</PARAM>
@@ -16,8 +16,20 @@
 </QTEST>
 
 
-<LINK name="*RctNonIsoEmOccEtaPhi">
-	<TestName activate="true">HotChannels_RCT</TestName>
+<LINK name="*RctEmIsoEmEtEtaPhi">
+	<TestName activate="true">HotChannels_RCT_2D</TestName>
+	<TestName activate="true">DeadChannels_RCT_2D</TestName>
 </LINK>
+
+<LINK name="*RctEmNonIsoEmEtEtaPhi">
+	<TestName activate="true">HotChannels_RCT_2D</TestName>
+	<TestName activate="true">DeadChannels_RCT_2D</TestName>
+</LINK>
+
+<LINK name="*RctRegionsEtEtaPhi">
+	<TestName activate="true">HotChannels_RCT_2D</TestName>
+	<TestName activate="true">DeadChannels_RCT_2D</TestName>
+</LINK>
+
 
 </TESTSCONFIGURATION>

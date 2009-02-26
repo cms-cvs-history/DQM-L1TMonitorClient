@@ -1,14 +1,14 @@
 <TESTSCONFIGURATION>
 
 
-<QTEST name="DeadChannels">
+<QTEST name="DeadChannels_CSCTF_2D">
          <TYPE>DeadChannel</TYPE>
          <PARAM name="error">0.99</PARAM>
          <PARAM name="warning">0.50</PARAM>
-         <PARAM name="threshold">3</PARAM>
+         <PARAM name="threshold">0</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels_CSCTF">
+<QTEST name="HotChannels_CSCTF_2D">
          <TYPE>NoisyChannel</TYPE>
          <PARAM name="error">0.80</PARAM>
          <PARAM name="warning">0.70</PARAM>
@@ -16,9 +16,14 @@
          <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
-<LINK name="*CSCTF_occupancies">
-        <TestName activate="true">HotChannels_CSCTF</TestName>
+<LINK name="*CSCTF_Chamber_Occupancies">
+        <TestName activate="true">HotChannels_CSCTF_2D</TestName>
+        <TestName activate="true">DeadChannels_CSCTF_2D</TestName>
 </LINK>
 
+<LINK name="*CSCTF_occupancies">
+        <TestName activate="true">HotChannels_CSCTF_2D</TestName>
+        <TestName activate="true">DeadChannels_CSCTF_2D</TestName>
+</LINK>
 
 </TESTSCONFIGURATION>

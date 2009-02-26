@@ -1,13 +1,13 @@
 <TESTSCONFIGURATION>
 
-<QTEST name="DeadChannels">
+<QTEST name="DeadChannels_GMT_2D">
 	 <TYPE>DeadChannel</TYPE>	 
 	 <PARAM name="error">0.99</PARAM>
 	 <PARAM name="warning">0.50</PARAM>
-	 <PARAM name="threshold">3</PARAM>
+	 <PARAM name="threshold">0</PARAM>
 </QTEST>
 
-<QTEST name="HotChannels_GMT">
+<QTEST name="HotChannels_GMT_2D">
 	 <TYPE>NoisyChannel</TYPE>   
 	 <PARAM name="error">0.80</PARAM>
 	 <PARAM name="warning">0.70</PARAM>
@@ -15,9 +15,22 @@
 	 <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
+<QTEST name="CompareHist_GMT">
+         <TYPE>Comp2RefChi2</TYPE>
+         <PARAM name="testparam">0</PARAM>
+         <PARAM name="error">0.30</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+</QTEST>
+
+
 
 <LINK name="*GMT_etaphi">
-        <TestName activate="true">HotChannels_GMT</TestName>
+        <TestName activate="true">HotChannels_GMT_2D</TestName>
+        <TestName activate="true">DeadChannels_GMT_2D</TestName>
+</LINK>
+
+<LINK name="*Regional_trigger">
+        <TestName activate="true">CompareHist_GMT</TestName>
 </LINK>
 
 

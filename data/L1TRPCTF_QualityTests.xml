@@ -1,54 +1,25 @@
 <TESTSCONFIGURATION>
 
-<QTEST name="rpcPhiOcc">
-   <TYPE>ContentsYRange</TYPE>     
-   <PARAM name="ymin">0.003</PARAM>
-   <PARAM name="ymax">0.015</PARAM>
-   <PARAM name="error">0.95</PARAM>
-   <PARAM name="warning">0.99</PARAM>
-   <PARAM name="useEmptyBins">1</PARAM>
+
+<QTEST name="DeadChannels_RPCTF_2D">
+         <TYPE>DeadChannel</TYPE>
+         <PARAM name="error">0.99</PARAM>
+         <PARAM name="warning">0.50</PARAM>
+         <PARAM name="threshold">0</PARAM>
 </QTEST>
 
-<QTEST name="synchro">
-   <TYPE>ContentsYRange</TYPE>     
-   <PARAM name="ymin">0.00</PARAM>
-   <PARAM name="ymax">0.3</PARAM>
-   <PARAM name="error">0.95</PARAM>
-   <PARAM name="warning">0.99</PARAM>
-   <PARAM name="useEmptyBins">1</PARAM>
+<QTEST name="HotChannels_RPCTF_2D">
+         <TYPE>NoisyChannel</TYPE>
+         <PARAM name="error">0.80</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+         <PARAM name="tolerance">10</PARAM>
+         <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
-<QTEST name="DeadChannels">
-	 <TYPE>DeadChannel</TYPE>	 
-	 <PARAM name="error">0.99</PARAM>
-	 <PARAM name="warning">0.50</PARAM>
-	 <PARAM name="threshold">3</PARAM>
-</QTEST>
-<QTEST name="HotChannels">
-	 <TYPE>NoisyChannel</TYPE>   
-	 <PARAM name="error">0.80</PARAM>
-	 <PARAM name="warning">0.70</PARAM>
-	 <PARAM name="tolerance">50</PARAM>
-	 <PARAM name="neighbours">3</PARAM>
-</QTEST>
-
-
-<!-- <LINK name="L1T/L1TRPCTF/RPCTF_bx"> -->
-<!-- <LINK name="L1T/L1TRPCTF/RPCTF_phi_valuepacked_norm"> -->
-<LINK name="*RPCTF_phi_valuepacked_norm*">
-   <TestName activate="false">rpcPhiOcc</TestName> 
-   <TestName activate="true">DeadChannels</TestName>
+<LINK name="*RPCTF_muons_tower_phipacked">
+        <TestName activate="true">HotChannels_RPCTF_2D</TestName>
+        <TestName activate="true">DeadChannels_RPCTF_2D</TestName>
 </LINK>
-
-<LINK name="*RPCTF_muons_tower_phipacked*">
-   <TestName activate="true">HotChannels</TestName> 
-   <TestName activate="false">DeadChannels</TestName>
-</LINK>
-
-<LINK name="*RPCTF_synchronization*">
-   <TestName activate="true">synchro</TestName> 
-</LINK>
-
 
 
 </TESTSCONFIGURATION>

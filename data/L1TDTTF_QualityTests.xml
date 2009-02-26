@@ -10,12 +10,13 @@
 	<PARAM name="useEmptyBins">1</PARAM>
 </QTEST>
 
-<QTEST name="DeadChannels">
+<QTEST name="DeadChannels_DTTF_2D">
          <TYPE>DeadChannel</TYPE>
          <PARAM name="error">0.99</PARAM>
          <PARAM name="warning">0.50</PARAM>
-         <PARAM name="threshold">3</PARAM>
+         <PARAM name="threshold">0</PARAM>
 </QTEST>
+
 
 <QTEST name="HotChannels_DTTF_pt">
          <TYPE>NoisyChannel</TYPE>
@@ -35,10 +36,10 @@
 
 <QTEST name="HotChannels_DTTF_2D">
          <TYPE>NoisyChannel</TYPE>
-         <PARAM name="error">0.99</PARAM>
-         <PARAM name="warning">0.99</PARAM>
-         <PARAM name="tolerance">0.5</PARAM>
-         <PARAM name="neighbours">2</PARAM>
+         <PARAM name="error">0.80</PARAM>
+         <PARAM name="warning">0.70</PARAM>
+         <PARAM name="tolerance">10</PARAM>
+         <PARAM name="neighbours">3</PARAM>
 </QTEST>
 
 <QTEST name="CompareHist">
@@ -50,20 +51,28 @@
 
 
 <LINK name="*Integrated Packed *">
-        <TestName activate="true">CompareHist</TestName>
+        <TestName activate="false">CompareHist</TestName>
 </LINK>
 
+
+
 <LINK name="*Occupancy Summary">
+        <TestName activate="true">DeadChannels_DTTF_2D</TestName>
+        <TestName activate="true">HotChannels_DTTF_2D</TestName>
+</LINK>
+
+<LINK name="*DTTF_etaphi">
+        <TestName activate="true">DeadChannels_DTTF_2D</TestName>
         <TestName activate="true">HotChannels_DTTF_2D</TestName>
 </LINK>
 
 
 <LINK name="*Integrated Packed Pt">
-        <TestName activate="true">HotChannels_DTTF_pt</TestName>
+        <TestName activate="false">HotChannels_DTTF_pt</TestName>
 </LINK>
 
 <LINK name="*Integrated Packed Phi">
-        <TestName activate="true">HotChannels_DTTF_phi</TestName>
+        <TestName activate="false">HotChannels_DTTF_phi</TestName>
 </LINK>
 
 
