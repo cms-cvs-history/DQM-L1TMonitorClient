@@ -13,10 +13,10 @@
          <PARAM name="error">0.80</PARAM>
          <PARAM name="warning">0.70</PARAM>
          <PARAM name="tolerance">10</PARAM>
-         <PARAM name="neighbours">3</PARAM>
+         <PARAM name="neighbours">1</PARAM>
 </QTEST>
 
-<LINK name="*RPCTF_muons_tower_phipacked">
+<LINK name="*RPCTF_muons_eta_phi_bx0">
         <TestName activate="true">HotChannels_RPCTF_2D</TestName>
         <TestName activate="true">DeadChannels_RPCTF_2D</TestName>
 </LINK>
