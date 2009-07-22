@@ -12,7 +12,7 @@
 
 <QTEST name="DeadChannels_DTTF_2D">
          <TYPE>DeadChannel</TYPE>
-         <PARAM name="error">0.99</PARAM>
+         <PARAM name="error">0.95</PARAM>
          <PARAM name="warning">0.50</PARAM>
          <PARAM name="threshold">0</PARAM>
 </QTEST>
