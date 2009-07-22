@@ -3,7 +3,7 @@
 
 <QTEST name="DeadChannels_CSCTF_2D">
          <TYPE>DeadChannel</TYPE>
-         <PARAM name="error">0.99</PARAM>
+         <PARAM name="error">0.80</PARAM>
          <PARAM name="warning">0.50</PARAM>
          <PARAM name="threshold">0</PARAM>
 </QTEST>
@@ -22,8 +22,8 @@
 </LINK>
 
 <LINK name="*CSCTF_occupancies">
-        <TestName activate="true">HotChannels_CSCTF_2D</TestName>
-        <TestName activate="true">DeadChannels_CSCTF_2D</TestName>
+        <TestName activate="false">HotChannels_CSCTF_2D</TestName>
+        <TestName activate="false">DeadChannels_CSCTF_2D</TestName>
 </LINK>
 
 </TESTSCONFIGURATION>
