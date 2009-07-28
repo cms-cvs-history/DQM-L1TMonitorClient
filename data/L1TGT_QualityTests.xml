@@ -9,11 +9,11 @@
 </QTEST>
 
 <LINK name="*algo_bits">
-        <TestName activate="true">CompareHist_GT</TestName>
+        <TestName activate="false">CompareHist_GT</TestName>
 </LINK>
 
 <LINK name="*tt_bits">
-        <TestName activate="true">CompareHist_GT</TestName>
+        <TestName activate="false">CompareHist_GT</TestName>
 </LINK>
 
 

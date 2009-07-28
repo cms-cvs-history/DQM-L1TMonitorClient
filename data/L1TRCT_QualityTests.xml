@@ -24,18 +24,18 @@
 
 
 <LINK name="*RctEmIsoEmEtEtaPhi">
-	<TestName activate="true">HotChannels_RCT_2D</TestName>
-	<TestName activate="true">DeadChannels_RCT_2D_loose</TestName>
+	<TestName activate="false">HotChannels_RCT_2D</TestName>
+	<TestName activate="false">DeadChannels_RCT_2D_loose</TestName>
 </LINK>
 
 <LINK name="*RctEmNonIsoEmEtEtaPhi">
-	<TestName activate="true">HotChannels_RCT_2D</TestName>
-	<TestName activate="true">DeadChannels_RCT_2D_loose</TestName>
+	<TestName activate="false">HotChannels_RCT_2D</TestName>
+	<TestName activate="false">DeadChannels_RCT_2D_loose</TestName>
 </LINK>
 
 <LINK name="*RctRegionsEtEtaPhi">
-	<TestName activate="true">HotChannels_RCT_2D</TestName>
-	<TestName activate="true">DeadChannels_RCT_2D_tight</TestName>
+	<TestName activate="false">HotChannels_RCT_2D</TestName>
+	<TestName activate="false">DeadChannels_RCT_2D_tight</TestName>
 </LINK>
 
 
