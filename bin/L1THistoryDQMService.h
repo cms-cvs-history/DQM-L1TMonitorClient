@@ -1,5 +1,5 @@
-#ifndef DQM_L1TMonitor_L1THistoryDQMService_H
-#define DQM_L1TMonitor_L1THistoryDQMService_H
+#ifndef DQM_L1TMONITORCLIENT_L1TTHistoryDQMService_H
+#define DQM_L1TMONITORCLIENT_L1TTHistoryDQMService_H
 
 #include "DQMServices/Diagnostic/interface/DQMHistoryServiceBase.h" 
 
@@ -21,6 +21,7 @@ class L1THistoryDQMService : public DQMHistoryServiceBase {
   bool setDBValuesForUser(std::vector<MonitorElement*>::const_iterator iterMes, HDQMSummary::InputVector& values  );
    
    edm::ParameterSet iConfig_;
+   double threshold_;
 };
 
 #endif //DQM_SiStripHistoricInfoClient_L1THistoryDQMService_H
