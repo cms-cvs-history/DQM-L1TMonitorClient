@@ -4,69 +4,89 @@ use File::Copy;
 
  
 #------Configure here ---------------------------------------
-$queue = "cmscaf1nh";
+$queue = "1nh";
 $curDir=`pwd`;
 chomp $curDir;
-$pathToFiles="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data/PromptReco";
-#$HLTPATH = "HLT_L1MuOpen"; $thr =30.;
-#$HLTPATH = "HLT_L1Mu20"; $thr =30.;
-#$HLTPATH = "HLT_L2Mu3_NoVertex"; $thr =30.;
-$HLTPATH = "HLT_L2Mu9"; $thr =30.;
-#$HLTPATH = "HLT_L2Mu11"; $thr =30.;
-#$HLTPATH = "HLT_Photon10_L1R"; $thr =25.;
-#$HLTPATH = "HLT_Photon15_L1R"; $thr =35.;
-#$HLTPATH = "HLT_Photon15_L1R_TrackIso_L1R"; $thr =35.;
-#$HLTPATH = "HLT_Photon15_LooseEcalIso_L1R"; $thr =35.;
 
 
-#client
-#$histoPath = "FourVector/client/$HLTPATH/custom-eff";
-#$name = "$HLTPATH\_wrt__l1Et_Eff_OnToL1_UM";
-#$name = "$HLTPATH\_wrt__offEt_Eff_L1ToOff_UM";
-#$name = "$HLTPATH\_wrt__offEt_Eff_OnToOff_UM";
+$online = 1; # 0 = PromptReco, 1 = Online
+$maxNruns = 3;
 
-#source
-$histoPath = "FourVector/source/$HLTPATH";
-$name = "$HLTPATH\_wrt__NL1";
-#$name = "$HLTPATH\_wrt__NOn";
-#$name = "$HLTPATH\_wrt__NOff";
-#$name = "$HLTPATH\_wrt__l1EtL1";
-#$name = "$HLTPATH\_wrt__offEtOff";
-#$name = "$HLTPATH\_wrt__onEtOn";
+$detid = 2;
+$thr = 0.;
 
 
-$detid =2;
-$par1 ="rms";
-$par2 ="usrMean";
-$par3 ="plateau";
+@monitor_list_stat = ("EtHad","EtMiss","EtTotal","HtMiss","GMT_pt");
+$size_monitor_list_stat = @monitor_list_stat;
+$par0 = "stat";
+$par1 = "usrMean";
+
+@monitor_list_rate = ("Rate_AlgoBit_015","Rate_AlgoBit_045","Rate_AlgoBit_055","Physics Triggers");
+$size_monitor_list_rate = @monitor_list_rate;
+$par2 = "ymean";
+$par3 = "ymeanerr";
+
+@monitor_list_doub = ("processEventRate");
+$size_monitor_list_doub = @monitor_list_doub;
+$par4 = "myfloat";
+
+
+if( $online ){
+    $name = "test_L1T_HDQM_Online";
+    $pathToFiles="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data/Online";
+}
+else {
+    $name = "test_L1T_HDQM_PromptReco";
+    $pathToFiles="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data/PromptReco";
+
+    $size_monitor_list_rate = 0;
+    $size_monitor_list_doub = 0;
+}
+
+
 #-------------------------------------------------------------
 
 
 system("rm -f $name\_dbfile.db\n");
 print("rm -f $name\_dbfile.db\n");
 mkdir($name);
-copy("submitMacro.ch", $name);
 chdir($name);
-system("chmod +x submitMacro.ch\n");
-#read file list
-$line=0;
-while(<>)
-{
-$run = $_;
+
+###read file list
+#$input_run_list = "$curDir/data/files_short.txt";
+#$input_run_list = "$curDir/data/files.txt";
+$input_run_list = "$curDir/data/RunSummary_dt_rpc_csc_ecal_hcal_CRAFT09_1M.txt";
+open(RUNLIST, $input_run_list) || die("Could not open file $input_run_list!");
+@run_list = <RUNLIST>;
+
+close(RUNLIST);
+
+$total_files  = 0;
+$active_files = 0;
+$nruns = @run_list;
+
+foreach $run (@run_list){
+
+$total_files++;
 chomp($run);
+print " \n Run $total_files of $nruns.  The current run is $run.\n";
+
 $A = substr($run,0,3);
-#$ZERO = "0";
-#$A = $ZERO.$A;
 $B = substr($run,3);
-#$file = "$pathToFiles/$A/$B/DQM_V0001_R000$run\__Cosmics__Commissioning09-PromptReco-v7__RECO.root";
-@v = glob("$pathToFiles/$A/$B/DQM_V0001_R000$run\__Cosmics__*");
+if( $online ){
+    @v = glob("$pathToFiles/$A/$B/DQM_V0002_R000$run*");
+}
+else { 
+    @v = glob("$pathToFiles/$A/$B/DQM_V0001_R000$run\__Cosmics__*");
+}
+
 $file = @v[0];
 print "$file\n";
 
-$line++;
+if( $file ){
 
-
-
+if( $active_files<$maxNruns ){
+$active_files++;
 
 open CFGFILE, "> historyClient_$run\_$name\_cfg.py";
 
@@ -95,9 +115,9 @@ print CFGFILE "process.PoolDBOutputService = cms.Service(\"PoolDBOutputService\"
 print CFGFILE "			BlobStreamerName = cms.untracked.string('TBufferBlobStreamingService'),\n";
 print CFGFILE "			outOfOrder = cms.untracked.bool(True),\n";
 print CFGFILE "			DBParameters = cms.PSet(\n";
-print CFGFILE "messageLevel = cms.untracked.int32(2),\n";
-print CFGFILE "authenticationPath = cms.untracked.string('/afs/cern.ch/cms/DB/conddb')\n";
-print CFGFILE "),\n";
+print CFGFILE "                       messageLevel = cms.untracked.int32(2),\n";
+print CFGFILE "                       authenticationPath = cms.untracked.string('/afs/cern.ch/cms/DB/conddb')\n";
+print CFGFILE "                 ),\n";
 print CFGFILE "\n";
 print CFGFILE "			timetype = cms.untracked.string('runnumber'),\n";
 print CFGFILE "			connect = cms.string('sqlite_file:$name\_dbfile.db'),\n";
@@ -108,7 +128,7 @@ print CFGFILE ")),\n";
 print CFGFILE "			logconnect = cms.untracked.string(\"sqlite_file:$name\_log.db\") \n";
 print CFGFILE "			)\n";
 print CFGFILE "\n";
-print CFGFILE "process.hltDQMHistoryPopCon = cms.EDAnalyzer(\"HLTDQMHistoryPopCon\",\n";
+print CFGFILE "process.l1tDQMHistoryPopCon = cms.EDAnalyzer(\"L1TDQMHistoryPopCon\",\n";
 print CFGFILE "			record = cms.string(\"HDQMSummary\"),\n";
 print CFGFILE "			loggingOn = cms.untracked.bool(True),\n";
 print CFGFILE "			SinceAppendMode = cms.bool(True),\n";
@@ -116,30 +136,56 @@ print CFGFILE "			Source = cms.PSet(since = cms.untracked.uint32($run),\n";
 print CFGFILE "			debug = cms.untracked.bool(False))\n";
 print CFGFILE ")\n";
 print CFGFILE "\n";
-print CFGFILE "process.HLTHistoryDQMService = cms.Service(\"HLTHistoryDQMService\",\n";
+print CFGFILE "process.L1THistoryDQMService = cms.Service(\"L1THistoryDQMService\",\n";
 print CFGFILE "			RunNb = cms.uint32($run),\n";
 print CFGFILE "			accessDQMFile = cms.bool(True),\n";
 print CFGFILE "			FILE_NAME = cms.untracked.string(\"$file\"),\n";
-print CFGFILE "			ME_DIR = cms.untracked.string(\"Run $run/HLT/Run summary/$histoPath/\"),\n";
+print CFGFILE "			ME_DIR = cms.untracked.string(\"Run $run/L1T/Run summary/\"),\n";
 print CFGFILE "			threshold = cms.untracked.double($thr),\n";
 print CFGFILE "			histoList = cms.VPSet(\n";
 print CFGFILE "\n";
-print CFGFILE "cms.PSet( keyName = cms.untracked.string('$name'), quantitiesToExtract = cms.untracked.vstring(\"stat\")),\n";
-print CFGFILE "cms.PSet( keyName = cms.untracked.string('$name'), quantitiesToExtract = cms.untracked.vstring(\"plateau\"))\n";
+
+if( $size_monitor_list_stat ){
+foreach $monitor0 (@monitor_list_stat){
+mkdir($monitor0);
+print CFGFILE "cms.PSet( keyName = cms.untracked.string('$monitor0'), quantitiesToExtract = cms.untracked.vstring(\"$par0\")),\n";
+print CFGFILE "cms.PSet( keyName = cms.untracked.string('$monitor0'), quantitiesToExtract = cms.untracked.vstring(\"$par1\")),\n";
+}
+}
+
+if( $size_monitor_list_rate ){
+foreach $monitor1 (@monitor_list_rate){
+mkdir($monitor1);
+print CFGFILE "cms.PSet( keyName = cms.untracked.string('$monitor1'), quantitiesToExtract = cms.untracked.vstring(\"$par2\")),\n";
+print CFGFILE "cms.PSet( keyName = cms.untracked.string('$monitor1'), quantitiesToExtract = cms.untracked.vstring(\"$par3\")),\n";
+}
+}
+
+if( $size_monitor_list_doub ){
+foreach $monitor2 (@monitor_list_doub){
+mkdir($monitor2);
+print CFGFILE "cms.PSet( keyName = cms.untracked.string('$monitor2'), quantitiesToExtract = cms.untracked.vstring(\"$par4\")),\n";
+}
+}
+
 print CFGFILE "\n";
 print CFGFILE ")\n";
 print CFGFILE ")\n";
-print CFGFILE "process.p = cms.Path(process.hltDQMHistoryPopCon)\n";
+print CFGFILE "process.p = cms.Path(process.l1tDQMHistoryPopCon)\n";
 print CFGFILE "\n";
 close CFGFILE ;
 
 print "cmsRun historyClient_$run\_$name\_cfg.py\n";
-system("cmsRun historyClient_$run\_$name\_cfg.py >& $name.log\n");
-#system("bsub -J $run\_$name -q $queue cmsRun historyClient_$run\_$name\_cfg.py\n");
+system("cmsRun historyClient_$run\_$name\_cfg.py >& output\_$run\_$name.log\n");
 
+###system("bsub -J $run\_$name -q $queue cmsRun historyClient_$run\_$name\_cfg.py\n");
+
+}
+}
 }
 system("cmscond_list_iov -c sqlite_file:$name\_dbfile.db -t HDQM_test\n");
 
 
+print "\n  Ran on $active_files of $total_files ($nruns) files.\n";
 print "End submission...\n";
 
