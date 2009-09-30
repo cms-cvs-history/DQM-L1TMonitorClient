@@ -5,7 +5,6 @@
 <use name=rootminuit>
 <use name=boost_program_options>
 <use name=FWCore/FWLite>
-<use name=DQMServices/Diagnostic>
 
 <use name=boost>
 <use name=root> 
