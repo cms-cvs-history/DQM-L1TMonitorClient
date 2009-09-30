@@ -4,7 +4,7 @@ DEFINE_SEAL_MODULE();
 
 #include "FWCore/ServiceRegistry/interface/ServiceMaker.h"
 
-#include "DQM/L1TMonitor/plugins/L1THistoryDQMService.h"
+#include "DQM/L1TMonitorClient/bin/L1THistoryDQMService.h"
 DEFINE_ANOTHER_FWK_SERVICE(L1THistoryDQMService);
 
 #include "CondCore/PopCon/interface/PopConAnalyzer.h"
