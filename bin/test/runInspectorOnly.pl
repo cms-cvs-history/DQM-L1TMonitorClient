@@ -23,7 +23,11 @@ else {
 }
 
 
-$imgdir = "Images/Images_2009_09_30";
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime time;
+$year += 1900;
+$mon  += 1;
+$imgdir = "Images/Images_".$year."_".$mon."_".$mday;
+
 
 #-------------------------------------------------------------
 $detid =2;
@@ -62,7 +66,20 @@ $ymax = 999999;
 
 copy("submitMacro.ch", $name);
 chdir($name);
+if( -d "Images" ){
+print "Directory already exists: Images\n";
+}
+else{
+print "Creating directory: Images\n";
+mkdir("Images");
+if( -d $imgdir ){
+print "Directory already exists: $imgdir\n";
+}
+else{
+print "Creating directory: $imgdir\n";
 mkdir($imgdir);
+}
+}
 system("chmod +x submitMacro.ch\n");
 
 system("./submitMacro.ch $name\_dbfile.db $detid \"EtHad\"   $par0 0 $frun $lrun 0 0 100 $imgdir\n");
