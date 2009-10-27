@@ -1,24 +1,26 @@
 <library file="*.cc" name=L1THistoryClient>
 <bin file=Inspector.cpp name=myInspector ></bin>
+<bin name="L1TriggerHDQMInspector" file="L1TriggerHDQMInspector.cc"></bin>
 
 <use name=rootgraphics>
 <use name=rootminuit>
 <use name=boost_program_options>
-<use name=FWCore/FWLite>
 
 <use name=boost>
 <use name=root> 
 
 <use name=FWCore/Framework>
 <use name=FWCore/ServiceRegistry>
+<use name=FWCore/FWLite>
+<use name=FWCore/MessageLogger>
 
 <use name=CondCore/DBCommon>
 <use name=CondCore/Utilities>
 <use name=CondCore/PopCon>
+<use name=CondCore/DBOutputService>
 
 <use name=CondFormats/DQMObjects>
 <use name=CondFormats/DataRecord>
-
 
 <use name=DQMServices/Core>
 <use name=DQMServices/Diagnostic>
