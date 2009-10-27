@@ -9,8 +9,9 @@ $curDir=`pwd`;
 chomp $curDir;
 
 
-$online = 1; # 0 = PromptReco, 1 = Online
-$maxNruns = 3;
+$online = 1;   #  0 = PromptReco, 1 = Online
+$maxNruns = 5; # -1 = all runs
+
 
 $detid = 2;
 $thr = 0.;
@@ -53,8 +54,6 @@ mkdir($name);
 chdir($name);
 
 ###read file list
-#$input_run_list = "$curDir/data/files_short.txt";
-#$input_run_list = "$curDir/data/files.txt";
 $input_run_list = "$curDir/data/RunSummary_dt_rpc_csc_ecal_hcal_CRAFT09_1M.txt";
 open(RUNLIST, $input_run_list) || die("Could not open file $input_run_list!");
 @run_list = <RUNLIST>;
@@ -69,7 +68,6 @@ foreach $run (@run_list){
 
 $total_files++;
 chomp($run);
-print " \n Run $total_files of $nruns.  The current run is $run.\n";
 
 $A = substr($run,0,3);
 $B = substr($run,3);
@@ -81,12 +79,14 @@ else {
 }
 
 $file = @v[0];
-print "$file\n";
 
 if( $file ){
 
-if( $active_files<$maxNruns ){
+if( ($active_files<$maxNruns) || ($maxNruns==-1) ){
 $active_files++;
+
+print " \n Run $total_files of $nruns.  The current run is $run.\n";
+
 
 open CFGFILE, "> historyClient_$run\_$name\_cfg.py";
 
