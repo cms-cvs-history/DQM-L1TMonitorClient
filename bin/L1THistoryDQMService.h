@@ -1,5 +1,5 @@
-#ifndef DQM_L1TMONITORCLIENT_L1TTHistoryDQMService_H
-#define DQM_L1TMONITORCLIENT_L1TTHistoryDQMService_H
+#ifndef DQM_L1TMONITORCLIENT_L1THistoryDQMService_H
+#define DQM_L1TMONITORCLIENT_L1THistoryDQMService_H
 
 #include "DQMServices/Diagnostic/interface/DQMHistoryServiceBase.h" 
 
@@ -24,4 +24,4 @@ class L1THistoryDQMService : public DQMHistoryServiceBase {
    double threshold_;
 };
 
-#endif //DQM_SiStripHistoricInfoClient_L1THistoryDQMService_H
+#endif //DQM_L1TMonitorClient_L1THistoryDQMService_H
