@@ -56,11 +56,11 @@ void runL1TriggerInspector( const string &tagName, const string & Password, cons
   DQMHistoryCreateTrend makeTrend(&L1TriggerConfig);
 
   // Database and output configuration
-  //makeTrend.setDB("oracle://cms_orcoff_prep/CMS_DQM_31X_OFFLINE",tagName,"cms_dqm_31x_offline", Password,"");
-  makeTrend.setDB("sqlite_file:test_L1T_HDQM_Online_dbfile.db", tagName, "", Password, "");
+  makeTrend.setDB("oracle://cms_orcoff_prep/CMS_DQM_31X_OFFLINE",tagName,"cms_dqm_31x_offline", Password,"");
+  //makeTrend.setDB("sqlite_file:test_L1T_HDQM_Online_dbfile.db", tagName, "", Password, "");
   makeTrend.setDebug(1);
   makeTrend.setDoStat(1);
-  //makeTrend.setSkip99s(true);
+  makeTrend.setSkip99s(true);
   makeTrend.setBlackList(BlackList);
 
 
@@ -73,11 +73,10 @@ void runL1TriggerInspector( const string &tagName, const string & Password, cons
   config.push_back(Trend( "2@HtMiss@mean", "L1T_GCT_HtMiss_mean.gif", 0, Condition, "", Start, End, nRuns ));
   config.push_back(Trend( "2@GMT_pt@mean", "L1T_GMT_GMTpt_mean.gif",  0, Condition, "", Start, End, nRuns ));
 
-  config.push_back(Trend( "2@Rate_AlgoBit_015@ymean", "L1T_L1TScalersSCAL_RateAlgoBit015_ymean.gif",  0, Condition, "", Start, End, nRuns ));
-  config.push_back(Trend( "2@Rate_AlgoBit_045@ymean", "L1T_L1TScalersSCAL_RateAlgoBit045_ymean.gif",  0, Condition, "", Start, End, nRuns ));
-  config.push_back(Trend( "2@Rate_AlgoBit_055@ymean", "L1T_L1TScalersSCAL_RateAlgoBit055_ymean.gif",  0, Condition, "", Start, End, nRuns ));
-
-  config.push_back(Trend( "2@processEventRate@myfloat", "L1T_EventInfo_processEventRate_myfloat.gif",  0, Condition, "", Start, End, nRuns ));
+  //config.push_back(Trend( "2@Rate_AlgoBit_015@ymean", "L1T_L1TScalersSCAL_RateAlgoBit015_ymean.gif",  0, Condition, "", Start, End, nRuns ));
+  //config.push_back(Trend( "2@Rate_AlgoBit_045@ymean", "L1T_L1TScalersSCAL_RateAlgoBit045_ymean.gif",  0, Condition, "", Start, End, nRuns ));
+  //config.push_back(Trend( "2@Rate_AlgoBit_055@ymean", "L1T_L1TScalersSCAL_RateAlgoBit055_ymean.gif",  0, Condition, "", Start, End, nRuns ));
+  //config.push_back(Trend( "2@processEventRate@myfloat", "L1T_EventInfo_processEventRate_myfloat.gif",  0, Condition, "", Start, End, nRuns ));
 
 
   // Creation of trends
