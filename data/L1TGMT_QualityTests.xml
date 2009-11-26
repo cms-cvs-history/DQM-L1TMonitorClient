@@ -2,8 +2,8 @@
 
 <QTEST name="DeadChannels_GMT_2D">
 	 <TYPE>DeadChannel</TYPE>	 
-	 <PARAM name="error">0.02</PARAM>
-	 <PARAM name="warning">0.05</PARAM>
+	 <PARAM name="error">0.20</PARAM>
+	 <PARAM name="warning">0.50</PARAM>
 	 <PARAM name="threshold">0</PARAM>
 </QTEST>
 
