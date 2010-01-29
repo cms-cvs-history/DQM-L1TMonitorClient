@@ -50,13 +50,14 @@ std::string HDQMInspectorConfigL1Trigger::translateDetId(const uint32_t id) cons
 string const Condition = "";
 string const BlackList = "";
 
-void runL1TriggerInspector( const string &tagName, const string & Password, const int Start, const int End, const int nRuns )
+void runL1TriggerInspector( const string & dbName, const string &tagName, const string & Password, const int Start, const int End, const int nRuns )
 {
   HDQMInspectorConfigL1Trigger L1TriggerConfig;
   DQMHistoryCreateTrend makeTrend(&L1TriggerConfig);
 
   // Database and output configuration
-  makeTrend.setDB("oracle://cms_orcoff_prep/CMS_DQM_31X_OFFLINE",tagName,"cms_dqm_31x_offline", Password,"");
+  makeTrend.setDB(dbName,tagName,"cms_dqm_31x_offline", Password,"");
+  //makeTrend.setDB("oracle://cms_orcoff_prep/CMS_DQM_31X_OFFLINE",tagName,"cms_dqm_31x_offline", Password,"");
   //makeTrend.setDB("sqlite_file:test_L1T_HDQM_Online_dbfile.db", tagName, "", Password, "");
   makeTrend.setDebug(1);
   makeTrend.setDoStat(1);
@@ -89,32 +90,32 @@ void runL1TriggerInspector( const string &tagName, const string & Password, cons
 
 //******************************************************************************
 /// Simple method to create the trends. The actual operations are performed in runL1TriggerInspector.
-void L1TriggerHDQMInspector( const string &tagName, const string & password, const int start, const int end )
+void L1TriggerHDQMInspector( const string & dbName, const string &tagName, const string & password, const int start, const int end )
 {
-  runL1TriggerInspector( tagName, password, start, end, 0 );
+  runL1TriggerInspector( dbName, tagName, password, start, end, 0 );
 }
 
 /// Simple method to create the trends. The actual operations are performed in runL1TriggerInspector.
-void L1TriggerHDQMInspector( const string & tagName, const string & password, const int nRuns )
+void L1TriggerHDQMInspector( const string & dbName, const string & tagName, const string & password, const int nRuns )
 {
-  runL1TriggerInspector( tagName, password, 0, 0, nRuns );
+  runL1TriggerInspector( dbName, tagName, password, 0, 0, nRuns );
 }
 //******************************************************************************
 
 int main (int argc, char* argv[]) 
 {
-  if (argc != 4 && argc != 5) {
-    cerr << "Usage: " << argv[0] << " [TagName] [Password] [NRuns] " << endl;
-    cerr << "Or:    " << argv[0] << " [TagName] [Password] [FirstRun] [LastRun] " << endl;
+  if (argc != 5 && argc != 6) {
+    cerr << "Usage: " << argv[0] << " [Database] [TagName] [Password] [NRuns] " << endl;
+    cerr << "Or:    " << argv[0] << " [Database] [TagName] [Password] [FirstRun] [LastRun] " << endl;
     return 1;
   }
 
-  if (argc == 4) {
-    cout << "Creating trends for NRuns = " << argv[3] << " for tag: " << argv[1] << endl;
-    L1TriggerHDQMInspector( argv[1], argv[2], atoi(argv[3]) );
-  } else if(argc == 5) {
-    cout << "Creating trends for range:  " << argv[3] << " " << argv[4] << " for tag: " << argv[1] << endl;
-    L1TriggerHDQMInspector( argv[1], argv[2], atoi(argv[3]), atoi(argv[4]) );
+  if (argc == 5) {
+    cout << "Creating trends for NRuns = " << argv[4] << " for tag: " << argv[2] << endl;
+    L1TriggerHDQMInspector( argv[1], argv[2], argv[3], atoi(argv[4]) );
+  } else if(argc == 6) {
+    cout << "Creating trends for range:  " << argv[4] << " " << argv[5] << " for tag: " << argv[2] << endl;
+    L1TriggerHDQMInspector( argv[1], argv[2], argv[3], atoi(argv[4]), atoi(argv[5]) );
   }
 
   return 0;

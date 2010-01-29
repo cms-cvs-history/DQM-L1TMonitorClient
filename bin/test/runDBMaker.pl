@@ -9,7 +9,7 @@ $curDir=`pwd`;
 chomp $curDir;
 
 
-$online = 1;   #  0 = PromptReco, 1 = Online
+$online = 0;   #  0 = PromptReco, 1 = Online
 $maxNruns = 5; # -1 = all runs
 
 

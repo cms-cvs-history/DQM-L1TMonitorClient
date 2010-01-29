@@ -1,6 +1,6 @@
 <library file="*.cc" name=L1THistoryClient>
 <bin file=Inspector.cpp name=myInspector ></bin>
-<bin name="L1TriggerHDQMInspector" file="L1TriggerHDQMInspector.cc"></bin>
+<bin name="L1TMonitorHDQMInspector" file="L1TriggerHDQMInspector.cc"></bin>
 
 <use name=rootgraphics>
 <use name=rootminuit>
