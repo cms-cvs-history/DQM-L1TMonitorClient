@@ -1,109 +1,103 @@
-<TESTSCONFIGURATION>
+<TESTCONFIGURATION>
 
-<QTEST name="Eff2DTest">
-        <TYPE>ContentsWithinExpected</TYPE>
-        <PARAM name="minMean">.8</PARAM>
-        <PARAM name="maxMean">1.01</PARAM>
-        <PARAM name="minRMS">0</PARAM>
-        <PARAM name="maxRMS">0</PARAM>
-        <PARAM name="toleranceMean">0</PARAM>
-        <PARAM name="minEntries">0</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-        <PARAM name="error">0.994</PARAM>
-        <PARAM name="warning">0.994</PARAM>
-</QTEST>
-                                                                                
-<QTEST name="Eff1DTest">
-	<TYPE>ContentsYRange</TYPE>	
-	<PARAM name="ymin">.8</PARAM>
-	<PARAM name="ymax">1.01</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-	<PARAM name="error">0.997</PARAM>
-	<PARAM name="warning">0.997</PARAM>
+<QTEST name="eff2DErrorQTest">
+  <TYPE>ContentsWithinExpected</TYPE>
+  <PARAM name="minMean">0.98</PARAM>
+  <PARAM name="maxMean">1.01</PARAM>
+  <PARAM name="minRMS">0</PARAM>
+  <PARAM name="maxRMS">0</PARAM>
+  <PARAM name="toleranceMean">0</PARAM>
+  <PARAM name="minEntries">0</PARAM>
+  <PARAM name="useEmptyBins">0</PARAM>
+  <PARAM name="error">0.999</PARAM>
+  <PARAM name="warning">0.999</PARAM>
 </QTEST>
 
-<QTEST name="Ineff2DTest">
-        <TYPE>ContentsWithinExpected</TYPE>
-        <PARAM name="minMean">0.0</PARAM>
-        <PARAM name="maxMean">.2</PARAM>
-        <PARAM name="minRMS">0</PARAM>
-        <PARAM name="maxRMS">0</PARAM>
-        <PARAM name="toleranceMean">0</PARAM>
-        <PARAM name="minEntries">0</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-        <PARAM name="error">0.994</PARAM>
-        <PARAM name="warning">0.994</PARAM>
-</QTEST>
-                                                                                
-<QTEST name="Ineff1DTest">
-	<TYPE>ContentsYRange</TYPE>	
-	<PARAM name="ymin">0.0</PARAM>
-	<PARAM name="ymax">0.2</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-	<PARAM name="error">0.997</PARAM>
-	<PARAM name="warning">0.997</PARAM>
+<QTEST name="eff1DErrorQTest">
+  <TYPE>ContentsYRange</TYPE>
+  <PARAM name="ymin">1.0</PARAM>
+  <PARAM name="ymax">1.01</PARAM>
+  <PARAM name="useEmptyBins">0</PARAM>
+  <PARAM name="error">0.999</PARAM>
+  <PARAM name="warning">0.999</PARAM>
 </QTEST>
 
-<QTEST name="Overeff2DTest">
-        <TYPE>ContentsWithinExpected</TYPE>
-        <PARAM name="minMean">0.0</PARAM>
-        <PARAM name="maxMean">.2</PARAM>
-        <PARAM name="minRMS">0</PARAM>
-        <PARAM name="maxRMS">0</PARAM>
-        <PARAM name="toleranceMean">0</PARAM>
-        <PARAM name="minEntries">0</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-        <PARAM name="error">0.997</PARAM>
-        <PARAM name="warning">0.997</PARAM>
-</QTEST>
-                                                                                
-<QTEST name="Overeff1DTest">
-	<TYPE>ContentsYRange</TYPE>	
-	<PARAM name="ymin">0.0</PARAM>
-	<PARAM name="ymax">0.2</PARAM>
-        <PARAM name="useEmptyBins">0</PARAM>
-	<PARAM name="error">0.999</PARAM>
-	<PARAM name="warning">0.999</PARAM>
+<QTEST name="ineff2DErrorQTest">
+  <TYPE>ContentsWithinExpected</TYPE>
+  <PARAM name="minMean">0.0</PARAM>
+  <PARAM name="maxMean">0.02</PARAM>
+  <PARAM name="minRMS">0</PARAM>
+  <PARAM name="maxRMS">0</PARAM>
+  <PARAM name="toleranceMean">0</PARAM>
+  <PARAM name="minEntries">0</PARAM>
+  <PARAM name="useEmptyBins">0</PARAM>
+  <PARAM name="error">0.999</PARAM>
+  <PARAM name="warning">0.999</PARAM>
 </QTEST>
 
-<QTEST name="ChannelTest">
-	<TYPE>ContentsXRange</TYPE>	
-	<PARAM name="xmin">-0.5</PARAM>
-	<PARAM name="xmax">0.5</PARAM>
-	<PARAM name="error">0.95</PARAM>
-	<PARAM name="warning">0.95</PARAM>
+<QTEST name="ineff1DErrorQTest">
+  <TYPE>ContentsYRange</TYPE>
+  <PARAM name="ymin">0.0</PARAM>
+  <PARAM name="ymax">0.0</PARAM>
+  <PARAM name="useEmptyBins">0</PARAM>
+  <PARAM name="error">0.999</PARAM>
+  <PARAM name="warning">0.999</PARAM>
 </QTEST>
+
+<LINK name="*Eff2D">
+  <TestName activate="true">eff2DErrorQTest</TestName>
+</LINK>
 
 <LINK name="*Eff1">
-	<TestName activate="true">Eff2DTest</TestName>
+  <TestName activate="true">eff2DErrorQTest</TestName>
 </LINK>
 
 <LINK name="*Eff2">
-	<TestName activate="true">Eff2DTest</TestName>
+  <TestName activate="true">eff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*oneD">
-	<TestName activate="true">Eff1DTest</TestName>
+<LINK name="*Eff1D">
+  <TestName activate="true">eff1DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Eff1oneD">
+  <TestName activate="true">eff1DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Eff2oneD">
+  <TestName activate="true">eff1DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Ineff2D">
+  <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
 <LINK name="*Ineff">
-	<TestName activate="true">Ineff2DTest</TestName>
+  <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff1D">
-	<TestName activate="true">Ineff1DTest</TestName>
+<LINK name="*Ineff2">
+  <TestName activate="true">ineff2DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Overeff2D">
+  <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
 <LINK name="*Overeff">
-	<TestName activate="true">Overeff2DTest</TestName>
+  <TestName activate="true">ineff2DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Ineff1D">
+  <TestName activate="true">ineff1DErrorQTest</TestName>
+</LINK>
+
+<LINK name="*Ineff2oneD">
+  <TestName activate="true">ineff1DErrorQTest</TestName>
 </LINK>
 
 <LINK name="*Overeff1D">
-	<TestName activate="true">Overeff1DTest</TestName>
+  <TestName activate="true">ineff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Chnl*">
-	<TestName activate="true">ChannelTest</TestName>
-</LINK>
-
-</TESTSCONFIGURATION>
+</TESTCONFIGURATION>
