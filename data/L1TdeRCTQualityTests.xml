@@ -9,8 +9,8 @@
   <PARAM name="toleranceMean">0</PARAM>
   <PARAM name="minEntries">0</PARAM>
   <PARAM name="useEmptyBins">0</PARAM>
-  <PARAM name="error">0.999</PARAM>
-  <PARAM name="warning">0.999</PARAM>
+  <PARAM name="error">0.95</PARAM>
+  <PARAM name="warning">0.98</PARAM>
 </QTEST>
 
 <QTEST name="eff1DErrorQTest">
@@ -18,8 +18,8 @@
   <PARAM name="ymin">1.0</PARAM>
   <PARAM name="ymax">1.01</PARAM>
   <PARAM name="useEmptyBins">0</PARAM>
-  <PARAM name="error">0.999</PARAM>
-  <PARAM name="warning">0.999</PARAM>
+  <PARAM name="error">0.95</PARAM>
+  <PARAM name="warning">0.98</PARAM>
 </QTEST>
 
 <QTEST name="ineff2DErrorQTest">
@@ -31,8 +31,8 @@
   <PARAM name="toleranceMean">0</PARAM>
   <PARAM name="minEntries">0</PARAM>
   <PARAM name="useEmptyBins">0</PARAM>
-  <PARAM name="error">0.999</PARAM>
-  <PARAM name="warning">0.999</PARAM>
+  <PARAM name="error">0.95</PARAM>
+  <PARAM name="warning">0.98</PARAM>
 </QTEST>
 
 <QTEST name="ineff1DErrorQTest">
@@ -40,63 +40,63 @@
   <PARAM name="ymin">0.0</PARAM>
   <PARAM name="ymax">0.0</PARAM>
   <PARAM name="useEmptyBins">0</PARAM>
-  <PARAM name="error">0.999</PARAM>
-  <PARAM name="warning">0.999</PARAM>
+  <PARAM name="error">0.95</PARAM>
+  <PARAM name="warning">0.98</PARAM>
 </QTEST>
 
-<LINK name="*Eff2D">
+<LINK name="rct*Eff2D">
   <TestName activate="true">eff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Eff1">
+<LINK name="rct*Eff1">
   <TestName activate="true">eff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Eff2">
+<LINK name="rct*Eff2">
   <TestName activate="true">eff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Eff1D">
+<LINK name="rct*Eff1D">
   <TestName activate="true">eff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Eff1oneD">
+<LINK name="rct*Eff1oneD">
   <TestName activate="true">eff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Eff2oneD">
+<LINK name="rct*Eff2oneD">
   <TestName activate="true">eff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff2D">
+<LINK name="rct*Ineff2D">
   <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff">
+<LINK name="rct*Ineff">
   <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff2">
+<LINK name="rct*Ineff2">
   <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Overeff2D">
+<LINK name="rct*Overeff2D">
   <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Overeff">
+<LINK name="rct*Overeff">
   <TestName activate="true">ineff2DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff1D">
+<LINK name="rct*Ineff1D">
   <TestName activate="true">ineff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Ineff2oneD">
+<LINK name="rct*Ineff2oneD">
   <TestName activate="true">ineff1DErrorQTest</TestName>
 </LINK>
 
-<LINK name="*Overeff1D">
+<LINK name="rct*Overeff1D">
   <TestName activate="true">ineff1DErrorQTest</TestName>
 </LINK>
 
